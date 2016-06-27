@@ -1,0 +1,3 @@
+# Module shareloveradio
+# RPC service class, partial path of RPC policy file
+com.ranni.client.GreetingService, 8CE9CBF69E3A8A8A84B21F87A3A5CF69.gwt.rpc

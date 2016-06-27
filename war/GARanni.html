@@ -1,0 +1,107 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="GARanni.css">
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Web Application Starter Project</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="garanni/garanni.nocache.js"></script>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    
+    <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-78229328-1', 'auto');
+	  ga('send', 'pageview');
+	  ga('require', 'displayfeatures');
+ 	  ga('require', 'linkid', 'linkid.js');
+	
+	</script>
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled 
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>-->
+
+    <!-- <h1>Web Application Starter Project</h1> -->
+
+    <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<h1 class="text-center text-primary">
+					Welcome!</br> GA course demo
+				</h1> 
+				<!-- 
+				<button type="button" class="btn btn-lg btn-block btn-success" href="./module/Signup.html">
+					Signup
+				</button>
+				 -->
+				 <a href="./module/Signup.html" class="btn btn-lg btn-block btn-success">Signup</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<h3 class="text-center text-primary">
+					
+				</h3> 
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-5 col-xs-5">
+				 
+				<!-- <button type="button" class="btn btn-block btn-lg btn-warning">
+					Login
+				</button> -->
+				<a href="module/Login.html" class="btn btn-block btn-lg btn-warning h1">Login</a>
+			</div>
+			<div class="col-md-2 col-xs-2">
+			</div>
+			<div class="col-md-5 col-xs-5">
+				 
+				<button type="button" class="btn btn-block btn-lg btn-danger h1">
+					Logout
+				</button>
+			</div>
+		</div>
+	</div>
+  </body>
+</html>
