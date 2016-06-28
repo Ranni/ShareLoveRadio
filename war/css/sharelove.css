@@ -30,11 +30,29 @@
 	text-align:center
 }
 */
+.facebook_sso_btn {
+	background-color: #4267B2;
+	text-align:center;
+	color: white;
+	border-color: #2e6da4;
+}
+.facebook_sso_btn:hover  {
+	background-color: #1D4B7F;
+	text-align:center;
+	color: white;
+	border-color: #2e6da4;
+}
+.facebook_sso_btn:active {
+	background-color: #183A62;
+	text-align:center;
+	color: white;
+	border-color: #2e6da4;
+}
 
 .facebook_sso_div {
 	margin-top: 0.8cm;
 	margin-bottom: -30px;
-	text-align:center
+	text-align:center;
 }
 
 .facebook_sso_div_hide {

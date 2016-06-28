@@ -67,7 +67,7 @@ function statusChangeCallback(response) {
   } else {
     // The person is not logged into Facebook, so we're not sure if
     // they are logged into this app or not.
-    document.getElementById('status').innerHTML = 'FB希望你登入';
+    document.getElementById('status').innerHTML = '還沒登入嗎? 我們在等你';
   }
 }
 
@@ -159,10 +159,10 @@ window.fbAsyncInit = function() {
 	</div> -->
 	<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block"
 		onload="init_fb();" >
-		<a class="btn btn-block btn-lg btn-primary" 
-			style="font-size:16pt; font-weight:bold; text-align:center" 
+		<a class="btn btn-block btn-lg facebook_sso_btn" 
+			style="font-size:16pt; font-weight:bold; text-align:center;" 
 			onclick="fb_login();">
-			<img src="img/fb_icon.png" />
+			<img src="img/fb_icon.png" height="32" width="32" />
 			使用Facebook繼續
 		</a>
 	</div>
