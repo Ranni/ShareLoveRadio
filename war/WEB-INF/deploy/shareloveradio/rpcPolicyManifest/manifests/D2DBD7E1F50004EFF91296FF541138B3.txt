@@ -1,2 +1,0 @@
-serviceClass: com.ranni.client.GreetingService
-path: 8CE9CBF69E3A8A8A84B21F87A3A5CF69.gwt.rpc
