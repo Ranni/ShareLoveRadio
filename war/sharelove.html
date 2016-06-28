@@ -4,32 +4,16 @@
 <head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
-<style>
-a:link {
-    background-color: white;
-    font-family: cursive;
-    color: #4267B2;
-}
 
-a:visited {
-    background-color: white;
-    color: #4267B2;
-}
-
-a:hover {
-    background-color: #C8DFFF;
-    color: #777777;
-}
-
-a:active {
-    background-color: #4267B2;
-    color: white;
-}
-</style>
 <!-- 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 <script src="sharelove.js"></script>
  -->
+ 
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+
+<link href="css/sharelove.css" rel="stylesheet">
 </head>
 <body>
 
@@ -149,15 +133,30 @@ window.fbAsyncInit = function() {
 	data-scope="public_profile,email,user_friends" 
 	onload="init_fb();" >
 </div> -->
-
-<div class="fb-login-button" id="fb_login_button"
-	data-max-rows="1" 
-	data-size="xlarge" 
-	data-show-faces="false" 
-	data-auto-logout-link="false" 
-	data-scope="public_profile,email,user_friends" 
-	onload="init_fb();" >
+<!-- <div class="facebook_sso_div">
+	<div class="fb-login-button" id="fb_login_button" 
+		style="display: inline-block;" 
+		data-max-rows="1" 
+		data-size="xlarge" 
+		data-show-faces="false" 
+		data-auto-logout-link="false" 
+		data-scope="public_profile,email,user_friends" 
+		onload="init_fb();" >
+	</div>
+</div> -->
+<div class="row facebook_sso_div">
+	<!-- <div class="col-md-3 col-xs-4">
+		
+	</div> -->
+	<div class="col-md-5 col-xs-10 col-center-block" >
+		<a href="#" class="btn btn-block btn-lg btn-primary" 
+			style="font-size:16pt; font-weight:bold; text-align:center">
+			<img src="img/fb_icon.png" />
+			使用Facebook繼續
+		</a>
+	</div>
 </div>
+
 
 
 <!-- <fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();">
@@ -168,15 +167,25 @@ window.fbAsyncInit = function() {
 </div> -->
 
 
-<div id="status" style="color:#4267B2; font-size:20pt; font-weight:bold">
+<div id="status" style="color:#4267B2; font-size:20pt; font-weight:bold; text-align:center">
 </div>
-<div id="permission" style="font-size:15pt;">
-	<ul>
-		<li><a href="https://www.facebook.com/www.SHARE.it">#紙飛機</a>　不張貼任何動態至 Facebook。</li>
-		<li><a href="https://www.facebook.com/www.SHARE.it">#紙飛機</a>　為你匿名，開口說愛</li>
-		<li><a href="https://www.facebook.com/www.SHARE.it">#紙飛機</a>　為你省時間， 使用Facebook帳號，立即傳遞！</li>
-	</ul>
+
+<div  class="col-md-5 col-xs-12 col-center-block">
+	<div id="permission" style="font-size:15pt;">
+		<!-- <ul class="col-center-block" >
+			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　不張貼任何動態至 Facebook。</li>
+			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你匿名，開口說愛</li>
+			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你省時，用FB帳號 立即傳遞!</li>
+		</ul> -->
+		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　不張貼任何動態至 Facebook</br>
+		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你匿名，開口說愛</br>
+		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你省時，用FB帳號立即傳遞</br>
+	</div>
+		
 </div>
+
+
+
 
 </body>
 </html>
