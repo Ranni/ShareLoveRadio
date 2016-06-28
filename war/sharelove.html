@@ -30,15 +30,15 @@ function fbLoginSuccess() {
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+    	  response.name +  '，我們很想你' + ' :）';
     });
   }
 
 function hideFbLoginBtn(bIsHide){
 	if(bIsHide){
-		document.getElementById('fb_login_button').style.display = "none";
+		document.getElementById('fb_login_button').className="facebook_sso_div_hide";
 	}else{
-		document.getElementById('fb_login_button').style.display = "inline";
+		document.getElementById('fb_login_button').className="facebook_sso_div";
 	}
 }
   
@@ -70,6 +70,9 @@ function statusChangeCallback(response) {
   }
 }
 
+var fbLoginPageCallback = function(response){
+	statusChangeCallback(response)
+}
 
 
 
@@ -80,6 +83,11 @@ function init_fb() {
 	FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
     });
+	//FB.Event.subscribe('auth.login',fbLoginPageCallback);
+}
+
+function fb_login() {
+    FB.login( function(response) { statusChangeCallback(response);}, { scope: 'public_profile,email,user_friends' } );
 }
 
 window.fbAsyncInit = function() {
@@ -114,7 +122,7 @@ window.fbAsyncInit = function() {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.6&appId=1574424686221268";
+  js.src = "//connect.facebook.net/zh_TW/sdk.js";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
@@ -144,13 +152,15 @@ window.fbAsyncInit = function() {
 		onload="init_fb();" >
 	</div>
 </div> -->
-<div class="row facebook_sso_div">
+<div class="facebook_sso_div"  id="fb_login_button"  >
 	<!-- <div class="col-md-3 col-xs-4">
 		
 	</div> -->
-	<div class="col-md-5 col-xs-10 col-center-block" >
-		<a href="#" class="btn btn-block btn-lg btn-primary" 
-			style="font-size:16pt; font-weight:bold; text-align:center">
+	<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block"
+		onload="init_fb();" >
+		<a class="btn btn-block btn-lg btn-primary" 
+			style="font-size:16pt; font-weight:bold; text-align:center" 
+			onclick="fb_login();">
 			<img src="img/fb_icon.png" />
 			使用Facebook繼續
 		</a>
@@ -166,19 +176,20 @@ window.fbAsyncInit = function() {
 >
 </div> -->
 
-
-<div id="status" style="color:#4267B2; font-size:20pt; font-weight:bold; text-align:center">
+  
+<div id="status" class="col-xs-12 col-sm-10 col-md-6 col-lg-5 col-center-block"
+style="color:#4267B2; font-size:20pt; font-weight:bold; text-align:center; margin-top: 30px; margin-bottom: 30px">
 </div>
 
-<div  class="col-md-5 col-xs-12 col-center-block">
-	<div id="permission" style="font-size:15pt;">
+<div  class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-center-block" >
+	<div id="permission" style="font-size:15pt;　">
 		<!-- <ul class="col-center-block" >
 			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　不張貼任何動態至 Facebook。</li>
 			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你匿名，開口說愛</li>
 			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你省時，用FB帳號 立即傳遞!</li>
 		</ul> -->
 		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你省時，用FB帳號立即傳遞</br>
-		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你保密，不公開你的情意</br>
+		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你保密，不公開你的情意 </br>
 		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　貼心如你，傳遞情意、展現品味</br>
 		
 	</div>

@@ -1,0 +1,54 @@
+/** Add css rules here for your application. */
+
+
+.fb-fanpage-link a:link {
+    background-color: white;
+    font-family: cursive;
+    color: #4267B2;
+}
+
+.fb-fanpage-link a:visited {
+    background-color: white;
+    color: #4267B2;
+}
+
+.fb-fanpage-link a:hover {
+    background-color: #C8DFFF;
+    color: #777777;
+}
+
+.fb-fanpage-link a:active {
+    background-color: #4267B2;
+    color: white;
+}
+/**
+.facebook_sso_div {
+	background-color: #4267B2;
+	margin: 0px auto;
+	width: 600px;
+	height:50px;
+	text-align:center
+}
+*/
+
+.facebook_sso_div {
+	margin-top: 0.8cm;
+	margin-bottom: -30px;
+	text-align:center
+}
+
+.facebook_sso_div_hide {
+	text-align:center;
+	display: none
+}
+
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* ul {
+    list-style-type: none;
+    margin-left:-10em;
+} */
