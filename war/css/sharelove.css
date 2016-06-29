@@ -1,4 +1,10 @@
 /** Add css rules here for your application. */
+/* 
+body {
+   margin: -5px;
+   padding: 0;
+} */
+
 
 
 .fb-fanpage-link a:link {
@@ -51,7 +57,7 @@
 
 .facebook_sso_div {
 	margin-top: 0.2cm;
-	margin-bottom: -30px;
+	margin-bottom: -10px;
 	text-align:center;
 }
 
@@ -69,4 +75,39 @@
 /* ul {
     list-style-type: none;
     margin-left:-10em;
+} */
+
+.love_theme_img {
+	width: 240px; 
+	height: 234px;
+	 float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.google_form_img {
+	width: 120px; 
+	height: 60px;
+	 float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -50px;
+    z-index:99999;position: relative;
+}
+
+.iframe_google_form {
+	display: block
+}
+.iframe_google_form_hide {
+	display: none
+}
+/* .love_theme_img_small {
+	width: 180px; 
+	height: 176px;
+	 float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 } */

@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<!-- <html ng-app> -->
-<html>
-<head>
-	<title>Facebook SSO</title>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-   
-<!-- 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-<script src="sharelove.js"></script>
- -->
- 
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
+// Empty JS for your own code to be here
+var global_var_reload_cnt=-1
+    
+function onload_google_form() {
+	global_var_reload_cnt=global_var_reload_cnt+1
+	console.log('load google form = '+global_var_reload_cnt)
+	
+	if(global_var_reload_cnt==1){
+		document.getElementById("id_iframe_google_form").height="560"
+			//$('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
+	}else{
+		document.getElementById("id_iframe_google_form").height="1020"
+		
+	}
+	/* $("iframe_google_form").contents.find("span").css("color", "red"); */
+}
 
-<link href="css/sharelove.css" rel="stylesheet">
-</head>
-
-<script>
 
 
 
@@ -38,6 +35,14 @@ function hideFbLoginBtn(bIsHide){
 		document.getElementById('fb_login_button').className="facebook_sso_div";
 	}
 }
+
+function hideGoogleForm(bIsHide){
+	if(bIsHide){
+		document.getElementById('id_iframe_google_form').className="iframe_google_form_hide";
+	}else{
+		document.getElementById('id_iframe_google_form').className="iframe_google_form";
+	}
+}
   
 <!--  ---------------------------- Facebook SSO init ---------------------------- -->
 
@@ -49,12 +54,13 @@ function statusChangeCallback(response) {
   // app know the current login status of the person.
   // Full docs on the response object can be found in the documentation
   // for FB.getLoginStatus().
-  hideFbLoginBtn(false)
-	
+  hideFbLoginBtn(false);
+  hideGoogleForm(true);
     
   if (response.status === 'connected') {
 	  
-	hideFbLoginBtn(true)  
+	hideFbLoginBtn(true);
+	hideGoogleForm(false);
     // Logged into your app and Facebook.
     fbLoginSuccess();
   } else if (response.status === 'not_authorized') {
@@ -125,89 +131,3 @@ window.fbAsyncInit = function() {
 
 
 <!--  ---------------------------- Facebook SSO init ---------------------------- -->
-
-</script>
-
-<body>
-
-
-<div id="fb-root"></div>
-
-<div class="col-center-block" style="margin-bottom:30px; margin-top:30px; opacity:0.9" >
-	<img 
-	 class="love_theme_img" 
-	 src="img/theme_love.jpg" width="240PX" height="234px" />
-</div>
-
-<!-- <div class="fb-login-button" 
-	data-max-rows="1" 
-	data-size="xlarge" 
-	data-show-faces="true" 
-	data-auto-logout-link="false" 
-	data-scope="public_profile,email,user_friends" 
-	onload="init_fb();" >
-</div> -->
-<!-- <div class="facebook_sso_div">
-	<div class="fb-login-button" id="fb_login_button" 
-		style="display: inline-block;" 
-		data-max-rows="1" 
-		data-size="xlarge" 
-		data-show-faces="false" 
-		data-auto-logout-link="false" 
-		data-scope="public_profile,email,user_friends" 
-		onload="init_fb();" >
-	</div>
-</div> -->
-<div class="facebook_sso_div_hide"  id="fb_login_button"  >
-	<!-- <div class="col-md-3 col-xs-4">
-		
-	</div> -->
-	<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block"
-		onload="init_fb();" >
-		<a class="btn btn-block btn-lg facebook_sso_btn" 
-			style="font-size:18pt; font-weight:bold; text-align:center;" 
-			onclick="fb_login();">
-			<img src="img/fb_icon.png" height="32" width="32" />
-			使用Facebook繼續
-		</a>
-	</div>
-</div>
-
-
-<!-- <fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();">
-</fb:login-button> -->
-<!-- <div id="fb_login_button" 
-	
->
-</div> -->
-
-  
-<div id="status" class="col-xs-12 col-sm-10 col-md-6 col-lg-5 col-center-block"
-style="color:#4267B2; font-size:16pt; font-weight:bold; text-align:center; margin-top: 30px; margin-bottom: 15px">
-</div>
-
-
-
-
-<div  class="col-xs-12 col-sm-5 col-md-4 col-lg-3 col-center-block"  >
-	<div id="permission" style="font-size:12pt;">
-		<!-- <ul class="col-center-block" >
-			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　不張貼任何動態至 Facebook。</li>
-			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你匿名，開口說愛</li>
-			<li><a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你省時，用FB帳號 立即傳遞!</li>
-		</ul> -->
-		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你省時，用FB帳號立即傳遞</br>
-		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　為你保密，不公開你的情意 </br>
-		<a class="fb-fanpage-link" href="https://www.facebook.com/www.SHARE.it" target="_blank">#紙飛機</a>　貼心如你，傳遞情意、展現品味</br>
-		
-	</div>
-		
-</div>
-
-
-
-</body>
-</html>
-
-
-
