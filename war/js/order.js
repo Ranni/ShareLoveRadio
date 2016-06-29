@@ -1,5 +1,9 @@
 // Empty JS for your own code to be here
-var global_var_reload_cnt=-1
+var global_var_reload_cnt=-1;
+var access_token = "";
+var user_id = "";
+var user_data_json= "";
+var friends_json= "";
     
 function onload_google_form() {
 	global_var_reload_cnt=global_var_reload_cnt+1
@@ -20,12 +24,22 @@ function onload_google_form() {
 
 
 function fbLoginSuccess() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
+    //console.log('Welcome!  Fetching your information.... ');
+	//me?fields=id,name,email,age_range,about,birthday,devices,gender,friends
+    FB.api('/me?fields=name,age_range,email,gender,devices,picture', function(response) {
       console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-    	  response.name +  '，我們很想你' + ' :）';
+      document.getElementById('status').innerHTML = response.name +  '，我們很想你' + ' :）';
+      user_data_json = JSON.stringify(response);
     });
+    
+    FB.api('/me?fields=friends', function(response) {
+        console.log('friends: ' + JSON.stringify(response));
+        friends_json = JSON.stringify(response);
+    });
+    
+    /*FB.api('/me?fields=taggable_friends', function(response) {
+        console.log('Successful login for: ' + JSON.stringify(response));
+    });*/
   }
 
 function hideFbLoginBtn(bIsHide){
@@ -49,20 +63,31 @@ function hideGoogleForm(bIsHide){
 //This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
-  console.log(JSON.stringify(response));
+  //console.log(JSON.stringify(response));
+  
   // The response object is returned with a status field that lets the
   // app know the current login status of the person.
   // Full docs on the response object can be found in the documentation
   // for FB.getLoginStatus().
   hideFbLoginBtn(false);
   hideGoogleForm(true);
+  
+  access_token = "";
+  user_id = ""
     
   if (response.status === 'connected') {
 	  
 	hideFbLoginBtn(true);
 	hideGoogleForm(false);
+	
+	access_token	= response.authResponse.accessToken;
+	user_id			= response.authResponse.userID;
+	console.log(access_token);
+	console.log(user_id);
+	
     // Logged into your app and Facebook.
     fbLoginSuccess();
+    
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     document.getElementById('status').innerHTML = '朋友都在，一起來玩紙飛機！';
