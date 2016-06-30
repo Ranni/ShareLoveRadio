@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/module_d.css" rel="stylesheet"> 
+	
+	
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>紙飛機➤教學步驟❤</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    
+    <script>
+	    function DetectDevice(){
+	       var uagent = navigator.userAgent.toLowerCase();
+	       console.log(uagent)
+	       if (uagent.search("iphone") > -1)
+	    	   window.location.assign("http://1-dot-shareloveradio.appspot.com/module/url_step_di.html")
+	       else
+	          if(uagent.search("android") >-1)
+	        	  window.location.assign("http://1-dot-shareloveradio.appspot.com/module/url_step_da.html")
+	          else
+	        	  window.location.assign("http://1-dot-shareloveradio.appspot.com/module/url_step_dw.html")
+	    }
+    </script>
+    <!-- <style>
+    	html,body { height: 100%; }
+    </style> -->
+  </head>
+
+
+  
+  
+  <body onload="DetectDevice();">
+  	
+  </body>
+</html>
