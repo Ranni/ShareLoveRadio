@@ -13,6 +13,8 @@
     <!--                                                               -->
     
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 	<link href="../css/module_d.css" rel="stylesheet"> 
 	
 	
@@ -27,7 +29,11 @@
     <!-- be added before this line.                -->
     <!--                                           -->
     
-    
+    <script>
+	    function RedirectUrl(page_url){
+	       window.location.replace(page_url);
+	    }
+    </script>
     <!-- <style>
     	html,body { height: 100%; }
     </style> -->
@@ -36,64 +42,98 @@
 
   
   
-  <body style=" padding-left:1cm; padding-right:1cm; overflow-y:scroll; overflow-x:hidden; ">
-  	<div class="row col-center-block" style="width:100%; bottom: 0; height:70px" >
-    	<div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
-	         <a href="url_step_dw.html" width="" >
-	           <img class="img_dw" width="42px" height="42px" />
-	           <br/>
-	           <font color="black" size="4">PC Web</font>
-	         </a>
-	     </div>
-	     
-	     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble_active">
-	         <a href="url_step_di.html" >
-	         	<img class="img_di_active" width="42px" height="42px" />
-	         	<br/>
-				<font color="white" size="4">iphone</font>
-	         </a>
-	     </div>
-	     
-	     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
-	         <a href="url_step_da.html">
-	         	<img class="img_da " width="42px" height="42px" />
-				<br/>
-				<font color="black" size="4">android</font>
-	         </a>
-	     </div>
+  <body style=" overflow-y:scroll; overflow-x:hidden;  padding-top: 10px; ">
+  
+  	<div class="board">
+  		<div class="board-inner">
+	         <ul class="nav nav-tabs" id="myTab">
+	         <div class="liner"></div>
+	          <li >
+	          <p class=" col-center-block" style="margin-bottom:-15px; margin-right:-8px; " ><font color="black" size="4"><b>PC</b></font></br></p>
+	          <a data-toggle="tab" title="PC" data-original-title="PC" onclick="RedirectUrl('url_step_dw.html');" onMouseOver="this.style.cursor='pointer'">
+	           <span class="round-tabs one">
+	           		<!-- PC Web</br> -->
+	                <img class="img_dw" />
+	           </span> 
+	       </a></li>
+	
+	       <li class="active">
+	       	<p class="col-center-block" style="margin-bottom:-15px; margin-right:-8px; " ><font color="black" size="4" ><b>iphone</b></font></br></p>
+	       	<a data-toggle="tab" title="iphone" data-original-title="iphone">
+	          <span class="round-tabs two">
+	          	 <!--  iphone</br> -->
+	              <img class="img_di_active" />
+	          </span> 
+			</a>
+	      </li>
+	      <li>
+	     	<p class=" col-center-block" style="margin-bottom:-15px; margin-right:-8px;" ><font color="black" size="4"><b>android</b></font></br></p>
+	      	<a data-toggle="tab" title="android" data-original-title="android" onclick="RedirectUrl('url_step_da.html');" onMouseOver="this.style.cursor='pointer'">
+	          <span class="round-tabs three">
+	          	   <!-- android</br> -->
+	               <img class="img_da"/>
+	          </span>
+			</a>
+	      </li>
+	          
+	          </ul>
+	    </div>
+	  	<!-- <div class="row col-center-block" style="width:100%; bottom: 0; height:70px" >
+	    	<div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
+		         <a href="url_step_dw.html" width="" >
+		           <img class="img_dw" width="42px" height="42px" />
+		           <br/>
+		           <font color="black" size="4">PC Web</font>
+		         </a>
+		     </div>
+		     
+		     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble_active">
+		         <a href="url_step_di.html" >
+		         	<img class="img_di_active" width="42px" height="42px" />
+		         	<br/>
+					<font color="white" size="4">iphone</font>
+		         </a>
+		     </div>
+		     
+		     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
+		         <a href="url_step_da.html">
+		         	<img class="img_da " width="42px" height="42px" />
+					<br/>
+					<font color="black" size="4">android</font>
+		         </a>
+		     </div>
+	  	</div> -->
+	  	<!-- <div class="wrapper" ></div> -->
+	    <!-- <iframe src="http://m.facebook.com/" width="100%" height="460px" frameborder="0" scrolling="no"></iframe> -->
+	    <div class="row col-center-block wrapper" >
+	    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-center-block " style=""  >
+	    	
+	    		<!-- <span style="font-size:2em; font-family:cursive" > <b>手機網頁</b> </span> -->
+	    		</br></br>
+	    		<span style="font-size:2em; font-family:cursive;  color:red" >  <u><b>網址列 長按</b> </u> </span>
+	    		
+	    		<!-- <img src="../img/di/di_1.png"  style="width:220px; height:360px ; margin-top:5px;"  /> </br> -->
+	    		
+	    		<div class="row"><img src="../img/di/di_2.png"  class="col-lg-5 col-md-8 col-sm-12 col-xs-12  col-center-block"  /></div>
+				<div class="row img_step_margin" ></div>
+	    		<div class="row"><img src="../img/di/di_3-1.png" class=" col-lg-5 col-md-8 col-sm-12 col-xs-12  col-center-block" /></div>
+				<div class="row img_step_margin" ></div>
+	    		<div class="row"><img src="../img/di/di_8.png" class=" col-lg-5 col-md-8 col-sm-12 col-xs-12  col-center-block"  /></div>
+				<div class="row img_step_margin" ></div>
+	    		
+	    		<!-- </br></br><span style="font-size:1.5em; font-family:cursive; color:red" >  <u>或者你可以<b>輕點一下</b> </u> </span></br>
+	    		<img src="../img/di/di_3-2.png"  style="width:220px; height:360px ;margin-top:5px;"  /></br>
+	    		<img src="../img/di/di_4-2.png"  style="width:220px; height:360px ;margin-top:45px;"  /></br>
+	    		<img src="../img/di/di_5-2.png"  style="width:220px; height:360px ;margin-top:45px;"  /></br>
+	    		<img src="../img/di/di_6-2.png"  style="width:220px; height:360px ;margin-top:45px;"  /></br>
+	    		<img src="../img/di/di_7-2.png"  style="width:220px; height:360px ;margin-top:45px;"  /></br>
+	    		<img src="../img/di/di_8.png"  style="width:220px; height:360px ;margin-top:45px;"  /></br></br> -->
+	    		
+	    		
+	    	</div>
+	    </div>
   	</div>
-  	<!-- <div class="wrapper" ></div> -->
-    <!-- <iframe src="http://m.facebook.com/" width="100%" height="460px" frameborder="0" scrolling="no"></iframe> -->
-    <div class="row col-center-block " >
-    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-center-block " style=""  >
-    	
-    		<!-- <span style="font-size:2em; font-family:cursive" > <b>手機網頁</b> </span> -->
-    		</br></br>
-    		<span style="font-size:2em; font-family:cursive;  color:red" >  <u><b>網址列 長按</b> </u> </span></br>
-    		
-    		<img src="../img/di/di_1.png"  style="width:160px; height:300px ; margin-top:5px;"  /> </br>
-    		
-    		<img src="../img/di/di_2.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br>
-    		<img src="../img/di/di_3-1.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br>
-    		<img src="../img/di/di_8.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br></br>
-    		
-    		</br></br><span style="font-size:2em; font-family:cursive; color:red" >  <u>或者你可以<b>輕點一下</b> </u> </span></br>
-    		<img src="../img/di/di_3-2.png"  style="width:160px; height:300px ;margin-top:5px;"  /></br>
-    		<img src="../img/di/di_4-2.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br>
-    		<img src="../img/di/di_5-2.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br>
-    		<img src="../img/di/di_6-2.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br>
-    		<img src="../img/di/di_7-2.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br>
-    		<img src="../img/di/di_8.png"  style="width:160px; height:300px ;margin-top:45px;"  /></br></br>
-    		
-    		
-    	</div>
-    </div>
-    
-    
-    
-    <fotter class="footer">
-    	
-    </fotter>
+  	
     
   </body>
 </html>

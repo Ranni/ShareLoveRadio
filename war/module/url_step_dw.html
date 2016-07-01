@@ -31,53 +31,93 @@
     <!-- <style>
     	html,body { height: 100%; }
     </style> -->
+    
+    <script>
+	    function RedirectUrl(page_url){
+	       window.location.replace(page_url);
+	    }
+    </script>
   </head>
 
 
   
-  <body style=" padding-left:1cm; padding-right:1cm; overflow-x:hidden;">
+  <body style="overflow-x:hidden;  padding-top: 10px;  ">
+  	
+  	
+  	<body style=" padding-left:1cm; padding-right:1cm; overflow-y:scroll; overflow-x:hidden; background:#efefe9; ">
   
-  	<div class="row col-center-block" style="width:100%; bottom: 0; height:70px" >
-    	<div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble_active">
-	         <a href="url_step_dw.html" width="" >
-	           <img class="img_dw_active" width="42px" height="42px" />
-	           <br/>
-	           <font color="white" size="4">PC Web</font>
-	         </a>
-	     </div>
-	     
-	     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
-	         <a href="url_step_di.html" >
-	         	<img class="img_di" width="42px" height="42px" />
-	         	<br/>
-				<font color="black" size="4">iphone</font>
-	         </a>
-	     </div>
-	     
-	     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
-	         <a href="url_step_da.html">
-	         	<img class="img_da " width="42px" height="42px" />
-				<br/>
-				<font color="black" size="4">android</font>
-	         </a>
-	     </div>
+  	<div class="board">
+  		<div class="board-inner">
+	     <ul class="nav nav-tabs" id="myTab">
+	     <div class="liner"></div>
+	     <li class="active">
+	         	<p class=" col-center-block" style="margin-bottom:-15px; margin-right:-8px;" ><font color="black" size="4"><b>PC</b></font></br></p>
+	          <a data-toggle="tab" title=""PC"" data-original-title="PC" >
+	           <span class="round-tabs one">
+	           		<!-- PC Web</br> -->
+	                <img class="img_dw_active" />
+	           </span> 
+	       </a></li>
+	
+	     <li>
+	       	<p class=" col-center-block" style="margin-bottom:-15px; margin-right:-8px;" ><font color="black" size="4"><b>iphone</b></font></br></p>
+	       	<a data-toggle="tab" title="iphone" data-original-title="iphone" onclick="RedirectUrl('url_step_di.html');" onMouseOver="this.style.cursor='pointer'">
+	          <span class="round-tabs two">
+	          	 <!--  iphone</br> -->
+	              <img class="img_di" />
+	          </span> 
+			</a>
+	      </li>
+	      <li>
+	      	<p class=" col-center-block" style="margin-bottom:-15px; margin-right:-8px;" ><font color="black" size="4"><b>android</b></font></br></p>
+	      	<a data-toggle="tab" title="android" data-original-title="android" onclick="RedirectUrl('url_step_da.html');" onMouseOver="this.style.cursor='pointer'">
+	          <span class="round-tabs three">
+	          	   <!-- android</br> -->
+	               <img class="img_da" />
+	          </span>
+			</a>
+	      </li>
+	          
+	          </ul>
+	    </div>
+	  	
+		<!-- <div class="row col-center-block" style="width:100%; bottom: 0; height:70px" >
+	    	<div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble_active">
+		         <a href="url_step_dw.html" width="" >
+		           <img class="img_dw_active" width="42px" height="42px" />
+		           <br/>
+		           <font color="white" size="4">PC Web</font>
+		         </a>
+		     </div>
+		     
+		     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
+		         <a href="url_step_di.html" >
+		         	<img class="img_di" width="42px" height="42px" />
+		         	<br/>
+					<font color="black" size="4">iphone</font>
+		         </a>
+		     </div>
+		     
+		     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 bubble">
+		         <a href="url_step_da.html">
+		         	<img class="img_da " width="42px" height="42px" />
+					<br/>
+					<font color="black" size="4">android</font>
+		         </a>
+		     </div>
+	  	</div> -->
+	  	<!-- <div class="wrapper" ></div> -->
+	    <!-- <iframe src="http://m.facebook.com/" width="100%" height="460px" frameborder="0" scrolling="no"></iframe> -->
+	    <div class="row col-center-block wrapper" >
+	    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-center-block"  >
+	    		<!-- <span style="font-size:2em; font-family:cursive" > <b>電腦網頁</b> </span> -->
+	    		
+	    		 <img src="../img/dw/dw_1.png"  style="width:100%; height:35% ;margin-top:5%;"  />
+	    		 
+	    	</div>
+	    </div>
   	</div>
-  	<!-- <div class="wrapper" ></div> -->
-    <!-- <iframe src="http://m.facebook.com/" width="100%" height="460px" frameborder="0" scrolling="no"></iframe> -->
-    <div class="row col-center-block " >
-    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-center-block"  >
-    		<!-- <span style="font-size:2em; font-family:cursive" > <b>電腦網頁</b> </span> -->
-    		
-    		 <img src="../img/dw/dw_1.png"  style="width:100%; height:250px ;margin-top:50px;"  />
-    		 
-    	</div>
-    </div>
-    
-    
-    
-    <fotter class="footer">
-    	
-    </fotter>
+  	
     
   </body>
 </html>

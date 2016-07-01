@@ -49,6 +49,13 @@ function hideFbLoginBtn(bIsHide){
 		document.getElementById('fb_login_button').className="facebook_sso_div";
 	}
 }
+function resizeLoveThemeImg(bIsHide){
+	if(bIsHide){
+		document.getElementById('love_theme_img').className="love_theme_img_s";
+	}else{
+		document.getElementById('love_theme_img').className="love_theme_img";
+	}
+}
 
 function hideGoogleForm(bIsHide){
 	if(bIsHide){
@@ -71,6 +78,7 @@ function statusChangeCallback(response) {
   // for FB.getLoginStatus().
   hideFbLoginBtn(false);
   hideGoogleForm(true);
+  //resizeLoveThemeImg(false);
   
   access_token = "";
   user_id = ""
@@ -79,6 +87,7 @@ function statusChangeCallback(response) {
 	  
 	hideFbLoginBtn(true);
 	hideGoogleForm(false);
+	//resizeLoveThemeImg(true);
 	
 	access_token	= response.authResponse.accessToken;
 	user_id			= response.authResponse.userID;

@@ -85,6 +85,12 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+.love_theme_img_s {
+	width: 96px; 
+	height: 92px;
+	 float: none;
+    display: none
+}
 
 .google_form_img {
 	width: 120px; 
@@ -98,7 +104,8 @@ body {
 }
 
 .iframe_google_form {
-	display: block
+	display: block;
+	margin-top:-9%;
 }
 .iframe_google_form_hide {
 	display: none
@@ -111,3 +118,12 @@ body {
     margin-left: auto;
     margin-right: auto;
 } */
+
+
+@media( min-width : 2000px ){
+	.iframe_google_form {
+		display: block;
+		margin-top:-6%;
+	}
+
+	}
