@@ -10,11 +10,13 @@ function onload_google_form() {
 	console.log('load google form = '+global_var_reload_cnt)
 	
 	if(global_var_reload_cnt==1){
-		document.getElementById("id_iframe_google_form").height="560"
+		document.getElementById("id_iframe_google_form").height="560";
+		window.scrollTo(0, 350);
+		//document.body.min-height="560";
 			//$('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
 	}else{
-		document.getElementById("id_iframe_google_form").height="1020"
-		
+		document.getElementById("id_iframe_google_form").height="1200";
+		//document.body.min-height="1400";
 	}
 	/* $("iframe_google_form").contents.find("span").css("color", "red"); */
 }
