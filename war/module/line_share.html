@@ -1,0 +1,71 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/module_d.css" rel="stylesheet"> 
+	
+	
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>紙飛機➤和你Line一起❤</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    
+    <script>
+	    function DetectDevice(){
+	    	/*
+	    	我在紙飛機送了好多心意給朋友，一起來玩紙飛機！
+			說不出口的話、心裡那份感動，讓紙飛機幫你傳遞溫暖！
+			
+			【電腦網頁或android請點選】
+			 - http://www.facebook.com/1303040129724555
+			
+			【iphone或ipad，請點選】
+			 - fb://profile/1303040129724555
+	    	*/
+	       var uagent = navigator.userAgent.toLowerCase();
+	       console.log(uagent);
+	       var msg_fb = "%E6%88%91%E5%9C%A8%E7%B4%99%E9%A3%9B%E6%A9%9F%E9%80%81%E4%BA%86%E5%A5%BD%E5%A4%9A%E5%BF%83%E6%84%8F%E7%B5%A6%E6%9C%8B%E5%8F%8B%EF%BC%8C%E4%B8%80%E8%B5%B7%E4%BE%86%E7%8E%A9%E7%B4%99%E9%A3%9B%E6%A9%9F%EF%BC%81%0A%E8%AA%AA%E4%B8%8D%E5%87%BA%E5%8F%A3%E7%9A%84%E8%A9%B1%E3%80%81%E5%BF%83%E8%A3%A1%E9%82%A3%E4%BB%BD%E6%84%9F%E5%8B%95%EF%BC%8C%E8%AE%93%E7%B4%99%E9%A3%9B%E6%A9%9F%E5%B9%AB%E4%BD%A0%E5%82%B3%E9%81%9E%E6%BA%AB%E6%9A%96%EF%BC%81%0A%0A";
+	       
+	       
+	       var ios_msg = "%E3%80%90iphone%E6%88%96ipad%EF%BC%8C%E8%AB%8B%E9%BB%9E%E9%81%B8%E3%80%91%0A - fb://profile/1303040129724555";
+	       var other_msg = "%E3%80%90%E9%9B%BB%E8%85%A6%E7%B6%B2%E9%A0%81%E6%88%96android%E8%AB%8B%E9%BB%9E%E9%81%B8%E3%80%91%0A - http://www.facebook.com/1303040129724555";
+	       
+	       //window.location.assign("line://msg/text/?fb://profile/1303040129724555");
+	       if (uagent.search("iphone") > -1)
+	       	  msg_fb = msg_fb + ios_msg + "%0A%0A" +other_msg;   	  
+	       else
+	       	  msg_fb = msg_fb + other_msg + "%0A%0A" +ios_msg;
+	       	  
+	         
+	        window.location.assign("http://line.me/R/msg/text/?"+msg_fb);
+	    }
+    </script>
+    <!-- <style>
+    	html,body { height: 100%; }
+    </style> -->
+  </head>
+
+
+  
+  
+  <body onload="DetectDevice();">
+  	
+  </body>
+</html>

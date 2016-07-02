@@ -5,17 +5,37 @@ var user_id = "";
 var user_data_json= "";
 var friends_json= "";
     
+function DetectDevice2Redirect(){
+    var uagent = navigator.userAgent.toLowerCase();
+    console.log(uagent);
+    
+    //document.getElementById("ios_fb_browser_notice").style="display: none";
+    if (uagent.search("iphone") > -1){
+		  //window.location.assign("fb://friends");
+		if(uagent.search("safari") <= -1){
+			//not open in safari|chrome
+			document.getElementById("ios_fb_browser_notice").style.display="block";
+		}
+    }else{
+    	
+    }
+}
+
 function onload_google_form() {
-	global_var_reload_cnt=global_var_reload_cnt+1
-	console.log('load google form = '+global_var_reload_cnt)
+	global_var_reload_cnt=global_var_reload_cnt+1;
+	console.log('load google form = '+global_var_reload_cnt);
 	
 	if(global_var_reload_cnt==1){
-		document.getElementById("id_iframe_google_form").height="560";
+		document.getElementById("id_iframe_google_form").height="500";
+		document.getElementById("id_iframe_google_form").minHeight="500";
+		document.body.style.height="850";
+		document.body.style.minHeight="500";
 		window.scrollTo(0, 350);
 		//document.body.min-height="560";
 			//$('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
 	}else{
 		document.getElementById("id_iframe_google_form").height="1200";
+		document.getElementById("id_iframe_google_form").minHeight="1200";
 		//document.body.min-height="1400";
 	}
 	/* $("iframe_google_form").contents.find("span").css("color", "red"); */
@@ -80,6 +100,7 @@ function statusChangeCallback(response) {
   // for FB.getLoginStatus().
   hideFbLoginBtn(false);
   hideGoogleForm(true);
+  document.body.style.minHeight=0;
   //resizeLoveThemeImg(false);
   
   access_token = "";
@@ -89,6 +110,7 @@ function statusChangeCallback(response) {
 	  
 	hideFbLoginBtn(true);
 	hideGoogleForm(false);
+	document.body.style.minHeight=1400;
 	//resizeLoveThemeImg(true);
 	
 	access_token	= response.authResponse.accessToken;

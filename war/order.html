@@ -37,7 +37,7 @@
 
 
   
-  <body style="min-height:1400px">
+  <body onload="DetectDevice2Redirect();" >
   	<!-- <iframe src="sharelove.html" width="100%" height="460px" frameborder="0" scrolling="no"></iframe> --> 
   	<div id="fb-root"></div>
 
@@ -76,6 +76,18 @@
 		</div>
 			
 	</div>
+  	
+  	
+  	<div id="ios_fb_browser_notice" style="display:none; background-color:#eee; margin-top:25px" 
+  		class="col-xs-12 col-sm-10 col-md-10 col-lg-10  col-center-block" >
+  		<span style="font-size:1.8em; font-family:monospace;  color:red" >
+	  		您目前使用的是FB瀏覽器，填寫訂單時將無法有最佳體驗。</br>
+	  		我們建議您以Safari或chrome瀏覽器開啟網頁。</br>
+	  		<!-- <span style="font-size:2em; font-family:cursive;  color:red" >  <u><b>網址列 長按</b> </u> </span> -->
+	  		<a href="module/redirect/safari_step.html" target="_blank">#如何以safari開啟訂單頁面</a></br>
+	  		<a href="module/redirect/chrome2open.html" target="_self">#點選開啟chrome頁面</a></br>
+  		</span>
+  	</div>
   	
   	<!-- <div class="col-center-block" style="opacity:0.9" >
 		<img class="google_form_img" src="img/google_form_bg.jpg" />
