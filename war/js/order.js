@@ -25,19 +25,22 @@ function onload_google_form() {
 	global_var_reload_cnt=global_var_reload_cnt+1;
 	console.log('load google form = '+global_var_reload_cnt);
 	
+	document.getElementById("id_iframe_google_form").style.height="1200px";
+	document.getElementById("id_iframe_google_form").style.minHeight="1200px";
+	document.body.style.height="1400px";
+	document.body.style.minHeight="1400px";
+	window.scrollTo(0, 250);
+	
 	if(global_var_reload_cnt==1){
-		document.getElementById("id_iframe_google_form").height="500";
-		document.getElementById("id_iframe_google_form").minHeight="500";
-		document.body.style.height="850";
-		document.body.style.minHeight="500";
-		window.scrollTo(0, 350);
+		document.getElementById("id_iframe_google_form").style.height="500px";
+		document.getElementById("id_iframe_google_form").style.minHeight="500px";
+		document.body.style.height="850px";
+		document.body.style.minHeight="500px";
+		window.scrollTo(0, 250);
 		//document.body.min-height="560";
 			//$('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
-	}else{
-		document.getElementById("id_iframe_google_form").height="1200";
-		document.getElementById("id_iframe_google_form").minHeight="1200";
-		//document.body.min-height="1400";
 	}
+	
 	/* $("iframe_google_form").contents.find("span").css("color", "red"); */
 }
 
@@ -110,7 +113,7 @@ function statusChangeCallback(response) {
 	  
 	hideFbLoginBtn(true);
 	hideGoogleForm(false);
-	document.body.style.minHeight=1400;
+	document.body.style.minHeight='1400px';
 	//resizeLoveThemeImg(true);
 	
 	access_token	= response.authResponse.accessToken;
