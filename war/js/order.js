@@ -27,9 +27,9 @@ function onload_google_form() {
 	
 	document.getElementById("id_iframe_google_form").style.height="1200px";
 	document.getElementById("id_iframe_google_form").style.minHeight="1200px";
-	document.body.style.height="1400px";
-	document.body.style.minHeight="1400px";
-	window.scrollTo(0, 250);
+	document.body.style.height="1500px";
+	document.body.style.minHeight="1500px";
+	
 	
 	if(global_var_reload_cnt==1){
 		document.getElementById("id_iframe_google_form").style.height="500px";
@@ -39,6 +39,8 @@ function onload_google_form() {
 		window.scrollTo(0, 250);
 		//document.body.min-height="560";
 			//$('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
+	}else if(global_var_reload_cnt>1){
+		window.scrollTo(0, 250);
 	}
 	
 	/* $("iframe_google_form").contents.find("span").css("color", "red"); */

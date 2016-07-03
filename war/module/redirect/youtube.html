@@ -33,13 +33,14 @@
 	       console.log(uagent);
 	       
 	       if (uagent.search("iphone") > -1){
-	 		  window.location.replace("youtube://www.youtube.com/feed/trending");
-	 		  window.close();
+	 		  //window.location.replace("youtube://www.youtube.com/feed/trending");
+	 		  window.location.replace("https://m.youtube.com/feed/trending");
+	 		  //window.close();
 	       }else{
 	       	  if(uagent.search("android") >-1)
-	        	  window.location.replace("http://www.youtube.com/feed/trending");
+	        	  window.location.replace("https://m.youtube.com/feed/trending");
 	          else
-	        	  window.location.replace("http://www.youtube.com/feed/trending");
+	        	  window.location.replace("https://www.youtube.com/feed/trending");
 	       }	 
 	    }
     </script>
