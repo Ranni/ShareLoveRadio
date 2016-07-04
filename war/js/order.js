@@ -21,6 +21,39 @@ function DetectDevice2Redirect(){
     }
 }
 
+function read_google_form(){
+	var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://spreadsheets.google.com/feeds/list/12-74oHdL5onWJfjxDbAbvtqoVFruulGBA2LxNh-7Zcw/2/public/values?alt=json-in-script', true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          var json = xhr.responseText;
+          console.log(json);
+          //alert(json);
+        } else {
+          alert('Network error occured.');
+        }
+      }
+    };
+    xhr.send();
+}
+
+
+function write_google_form(){
+	var theOneFb="https://m.facebook.com/abc";
+    var loveMsg="abcde!!!!!";
+    var theSong="https://youtu.be/yyy";
+  
+    var xhr = new XMLHttpRequest();
+    var url = 'https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/formResponse?' + 
+              'entry.1951458406=' + theOneFb + '&' +
+              'entry.1826836959=' + loveMsg + '&' +
+              'entry.2017693091=' + theSong + '&' + 
+              'submit=submit';
+    xhr.open('POST', url, true);
+    xhr.send();
+}
+
 function onload_google_form() {
 	global_var_reload_cnt=global_var_reload_cnt+1;
 	console.log('load google form = '+global_var_reload_cnt);
@@ -31,16 +64,29 @@ function onload_google_form() {
 	document.body.style.minHeight="1500px";
 	
 	
+	//write_google_form();
+	//read_google_form();
+    
+	if(global_var_reload_cnt%2==1){
+		//console.log("--------> "+(Math.floor(global_var_reload_cnt/2)+1)+" time");
+		ga('send', 'event', user_id, 'same-time-order='+(Math.floor(global_var_reload_cnt/2)+1), JSON.stringify(JSON.parse(user_data_json)), 10);
+		
+		
+	}
+	
 	if(global_var_reload_cnt==1){
 		document.getElementById("id_iframe_google_form").style.height="500px";
 		document.getElementById("id_iframe_google_form").style.minHeight="500px";
 		document.body.style.height="850px";
 		document.body.style.minHeight="500px";
 		window.scrollTo(0, 250);
+		
+		//ga('send', 'event', user_id, 'same-time-order=1', JSON.stringify(JSON.parse(user_data_json)), 5);
 		//document.body.min-height="560";
 			//$('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
 	}else if(global_var_reload_cnt>1){
 		window.scrollTo(0, 250);
+		
 	}
 	
 	/* $("iframe_google_form").contents.find("span").css("color", "red"); */
@@ -54,15 +100,26 @@ function fbLoginSuccess() {
     //console.log('Welcome!  Fetching your information.... ');
 	//me?fields=id,name,email,age_range,about,birthday,devices,gender,friends
     FB.api('/me?fields=name,age_range,email,gender,devices,picture', function(response) {
-      console.log('Successful login for: ' + response.name);
+      //console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML = response.name +  '，我們很想你' + ' :）';
       user_data_json = JSON.stringify(response);
+      
+      FB.api('/me?fields=friends', function(response) {
+          //console.log('friends: ' + JSON.stringify(response));
+          friends_json = JSON.stringify(response);
+          
+          var json_user 	 =  response;
+          json_user.profile  =  JSON.parse(user_data_json);
+          
+          ga('send', 'event', user_id, 'fb-sso', JSON.stringify(json_user), 1);
+      	  //console.log(JSON.stringify(json_user));
+      	
+      });
     });
     
-    FB.api('/me?fields=friends', function(response) {
-        console.log('friends: ' + JSON.stringify(response));
-        friends_json = JSON.stringify(response);
-    });
+    
+    
+    
     
     /*FB.api('/me?fields=taggable_friends', function(response) {
         console.log('Successful login for: ' + JSON.stringify(response));
@@ -112,7 +169,7 @@ function statusChangeCallback(response) {
   user_id = ""
     
   if (response.status === 'connected') {
-	  
+	
 	hideFbLoginBtn(true);
 	hideGoogleForm(false);
 	document.body.style.minHeight='1400px';
@@ -125,7 +182,7 @@ function statusChangeCallback(response) {
 	
     // Logged into your app and Facebook.
     fbLoginSuccess();
-    
+
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     document.getElementById('status').innerHTML = '朋友都在，一起來玩紙飛機！';

@@ -30,6 +30,20 @@
     <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
     <script type="text/javascript" language="javascript" src="js/order.js"></script>
     
+    
+    <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-80188957-1', 'auto');
+	  /* ga('require', 'linkid', 'linkid.js'); */
+	  ga('send', 'pageview');
+	  
+	  //ga('send', 'event', 'user_id', 'fb-sso', 'label');
+	
+	</script>
     <!-- <style>
     	html,body { height: 100%; }
     </style> -->
@@ -99,8 +113,14 @@
 		<img class="google_form_img" src="img/google_form_bg.jpg" />
 	</div> -->
   	
-  	<iframe id="id_iframe_google_form" class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block iframe_google_form_hide" 
+  	<!-- <iframe id="id_iframe_google_form" class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block iframe_google_form_hide" 
     	 src="https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/viewform?embedded=true" 
+    	 width="100%"  height="auto" frameborder="0"  marginheight="0" marginwidth="0" style="min-height:1200px;"
+    	 scrolling="no" 
+    	 onLoad="onload_google_form();" >載入中…</iframe> -->
+    	 
+    <iframe id="id_iframe_google_form" class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block iframe_google_form_hide" 
+    	 src="/module/google_form.html" 
     	 width="100%"  height="auto" frameborder="0"  marginheight="0" marginwidth="0" style="min-height:1200px;"
     	 scrolling="no" 
     	 onLoad="onload_google_form();" >載入中…</iframe>
