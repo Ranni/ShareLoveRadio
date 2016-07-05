@@ -1,9 +1,17 @@
 // Empty JS for your own code to be here
 var global_var_reload_cnt=-1;
 var access_token = "";
+
 var user_id = "";
-var user_data_json= "";
-var friends_json= "";
+var user_fb_mail 	= "";
+var user_name 		= "";
+var user_age_range 	= "";
+var user_gender 	= "";
+var user_device 	= "";
+var user_pic_url	= "";
+
+var user_data_json	= "";
+var friends_json	= "";
     
 function DetectDevice2Redirect(){
     var uagent = navigator.userAgent.toLowerCase();
@@ -38,23 +46,30 @@ function read_google_form(){
     xhr.send();
 }
 
-function write_google_spreadsheet(){
+function write_google_spreadsheet(theOneFb, loveMsg, theSong){
 	//
 	var googleAppScript = "https://script.google.com/macros/s/AKfycbw5EZWZuF0K5zZy-GXbsrLfRYuREo_X3nxT8xv5adHWDecybKc/exec";
-	var theOneFb="https://m.facebook.com/abc";
-    var loveMsg="abcde!!!!!";
-    var theSong="https://youtu.be/yyy";
+	//var theOneFb="https://m.facebook.com/abc";
+    //var loveMsg="abcde!!!!!";
+    //var theSong="https://youtu.be/yyy";
   
     
     var xhr = new XMLHttpRequest();
     var url = googleAppScript+"?" + 
-		  'userFbId=' + user_id + '&' +
+		'userFbId=' 	+ user_id + '&' +
+		'userName=' 	+ user_name + '&' +
+		'userAgeRange=' + user_age_range + '&' +
+		'userMail=' 	+ user_fb_mail + '&' +
+		'userGender=' 	+ user_gender + '&' +
+		'userDevice=' 	+ user_device + '&' +
+		'userDeviceOs=' + user_device_os + '&' +
+		'userPicUrl=' 	+ user_pic_url + '&' +
+		
 	    'theOneFb=' + theOneFb + '&' +
 	    'theWords=' + loveMsg + '&' +
 	    'theSong=' + theSong;
     
     
-    console.log("---------------------> "+url);
     xhr.open('GET', url, true);
     xhr.send();
 }
@@ -65,7 +80,7 @@ function write_google_form(){
   
     var xhr = new XMLHttpRequest();
     var url = 'https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/formResponse?' + 
-    		  'entry.1837844117=' + user_id + '&' +
+    		  'entry.1837844117=' + user_fb_mail + '&' +
               'entry.1951458406=' + theOneFb + '&' +
               'entry.1826836959=' + loveMsg + '&' +
               'entry.2017693091=' + theSong + '&' + 
@@ -73,6 +88,15 @@ function write_google_form(){
     console.log("---------------------> "+url);
     xhr.open('GET', url, true);
     xhr.send();
+}
+
+function googleFormSubmit(){
+	console.log("googleFormSubmit");
+	var theOneFb = $("#id_iframe_google_form").contents().find("#idTheOneFb").val();
+	var theWords = $("#id_iframe_google_form").contents().find("#idWords").val();
+	var theSong = $("#id_iframe_google_form").contents().find("#idTheSong").val();
+	
+	write_google_spreadsheet(theOneFb, theWords, theSong);
 }
 
 function onload_google_form() {
@@ -125,6 +149,15 @@ function fbLoginSuccess() {
       document.getElementById('status').innerHTML = response.name +  '，我們很想你' + ' :）';
       user_data_json = JSON.stringify(response);
       
+      user_name 	= response.name;
+      user_fb_mail	= response.email;
+      user_age_range= JSON.stringify(response.age_range);
+      user_gender	= response.gender;
+      user_device	= (response.devices)[0].hardware;
+      if(user_device==null) user_device="";
+      user_device_os= (response.devices)[0].os;
+      user_pic_url		= response.picture.data.url;
+      
       FB.api('/me?fields=friends', function(response) {
           //console.log('friends: ' + JSON.stringify(response));
           friends_json = JSON.stringify(response);
@@ -132,9 +165,9 @@ function fbLoginSuccess() {
           var json_user 	 =  response;
           json_user.profile  =  JSON.parse(user_data_json);
           
-          ga('send', 'event', user_id, 'fb-sso', JSON.stringify(json_user), 1);
+          ga('send', 'event', user_fb_mail, 'fb-sso', JSON.stringify(json_user), 1);
       	  //console.log(JSON.stringify(json_user));
-          write_google_spreadsheet();
+
       });
     });
     
@@ -199,7 +232,7 @@ function statusChangeCallback(response) {
 	access_token	= response.authResponse.accessToken;
 	user_id			= response.authResponse.userID;
 	console.log(access_token);
-	console.log(user_id);
+	//console.log(user_id);
 	
     // Logged into your app and Facebook.
     fbLoginSuccess();
