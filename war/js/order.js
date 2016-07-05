@@ -38,7 +38,26 @@ function read_google_form(){
     xhr.send();
 }
 
-
+function write_google_spreadsheet(){
+	//
+	var googleAppScript = "https://script.google.com/macros/s/AKfycbw5EZWZuF0K5zZy-GXbsrLfRYuREo_X3nxT8xv5adHWDecybKc/exec";
+	var theOneFb="https://m.facebook.com/abc";
+    var loveMsg="abcde!!!!!";
+    var theSong="https://youtu.be/yyy";
+  
+    
+    var xhr = new XMLHttpRequest();
+    var url = googleAppScript+"?" + 
+		  'userFbId=' + user_id + '&' +
+	    'theOneFb=' + theOneFb + '&' +
+	    'theWords=' + loveMsg + '&' +
+	    'theSong=' + theSong;
+    
+    
+    console.log("---------------------> "+url);
+    xhr.open('GET', url, true);
+    xhr.send();
+}
 function write_google_form(){
 	var theOneFb="https://m.facebook.com/abc";
     var loveMsg="abcde!!!!!";
@@ -46,11 +65,13 @@ function write_google_form(){
   
     var xhr = new XMLHttpRequest();
     var url = 'https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/formResponse?' + 
+    		  'entry.1837844117=' + user_id + '&' +
               'entry.1951458406=' + theOneFb + '&' +
               'entry.1826836959=' + loveMsg + '&' +
               'entry.2017693091=' + theSong + '&' + 
               'submit=submit';
-    xhr.open('POST', url, true);
+    console.log("---------------------> "+url);
+    xhr.open('GET', url, true);
     xhr.send();
 }
 
@@ -113,7 +134,7 @@ function fbLoginSuccess() {
           
           ga('send', 'event', user_id, 'fb-sso', JSON.stringify(json_user), 1);
       	  //console.log(JSON.stringify(json_user));
-      	
+          write_google_spreadsheet();
       });
     });
     
