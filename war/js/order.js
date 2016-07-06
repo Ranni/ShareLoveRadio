@@ -92,19 +92,22 @@ function write_google_form(){
 
 function googleFormSubmit(){
 	console.log("googleFormSubmit");
-	var theOneFb = $("#id_iframe_google_form").contents().find("#idTheOneFb").val();
-	var theWords = $("#id_iframe_google_form").contents().find("#idWords").val();
-	var theSong = $("#id_iframe_google_form").contents().find("#idTheSong").val();
-	
-	write_google_spreadsheet(theOneFb, theWords, theSong);
+//	$("#id_iframe_google_form").contentWindow.googleFormSubmit();
+	document.getElementById("id_iframe_google_form").src = "/module/google/google_form_response.html";
+	//window.frames["id_iframe_google_form"].location = "google_form_response.html";
+//	var theOneFb = $("#id_iframe_google_form").contents().find("#idTheOneFb").val();
+//	var theWords = $("#id_iframe_google_form").contents().find("#idWords").val();
+//	var theSong = $("#id_iframe_google_form").contents().find("#idTheSong").val();
+//	
+//	write_google_spreadsheet(theOneFb, theWords, theSong);
 }
 
 function onload_google_form() {
 	global_var_reload_cnt=global_var_reload_cnt+1;
 	console.log('load google form = '+global_var_reload_cnt);
 	
-	document.getElementById("id_iframe_google_form").style.height="1200px";
-	document.getElementById("id_iframe_google_form").style.minHeight="1200px";
+	document.getElementById("id_iframe_google_form").style.height="1250px";
+	document.getElementById("id_iframe_google_form").style.minHeight="1250px";
 	document.body.style.height="1500px";
 	document.body.style.minHeight="1500px";
 	
