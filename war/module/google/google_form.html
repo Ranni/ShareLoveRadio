@@ -2171,6 +2171,14 @@
     </style>
     	
     <style>
+    	.divUnSelectable{
+			-moz-user-select: -moz-none;
+		    -khtml-user-select: none;
+		    -webkit-user-select: none;
+		    -o-user-select: none;
+		    user-select: none;
+    	}
+    
 		 .col-center-block {
 		    float: none;
 		    display: block;
@@ -2181,10 +2189,10 @@
     	.submit_btn {
     		height: 50px;
     		border-radius: 8px;
+			border: #1D4B7F solid 1px;
 			background-color: #4267B2;
 			text-align:center;
 			color: white;
-			border-color: #2e6da4;
 			font-size:1.4em;
 			padding-top:10px;
 		}
@@ -2202,67 +2210,89 @@
 			color: white;
 			border-color: #2e6da4;
 		}
+		.submit_btn_disabled {
+    
+			height: 50px;
+    		border-radius: 8px;
+			border: #999 solid 2px;
+			background-color: #ccc;
+			text-align:center;
+			color: white;
+			font-size:1.4em;
+			padding-top:10px;
+		}
 
     </style>
     
     <script type="text/javascript">
-
-    	function onInput(focus_id){
-    		var underline = focus_id+"_underline";
-    		var DIV = focus_id+"_DIV";
-    		var text = document.getElementById(focus_id).value;
-    		var re;
-    		
-    		if(focus_id=="idTheOneFb"){
-    			//https://(m|www).facebook.com/
-    			//請提供正確的youtube連結哦❤
-    			re = /https:\/\/(m|www).facebook.com\//;
-    			if(re.test(text)){
-    				//normal="freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem"
-    				document.getElementById(DIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
-    			}else{
-    				//error=freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError 
-    				//document.getElementById(DIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-    			}
-    		}else if(focus_id=="idWords"){
-    			document.getElementById(focus_id).style.overflowY="hidden";
-    			document.getElementById(focus_id).style.marginBottom = "-10px";
-    			//console.log(("#idWords").val().split("/\r|\r\n|\n/").length);
-    			document.getElementById(focus_id).style.height = "auto";
-    			if(document.getElementById(focus_id).scrollHeight<=90){
-    				document.getElementById(focus_id).style.height = (document.getElementById(focus_id).scrollHeight)+ 'px';
-    				if( document.getElementById(focus_id).value.length>0){
-    					document.getElementById("idWords_DIV").className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
-    				}
-    			}else{
-    				document.getElementById(focus_id).style.overflowY="visible";
-    				document.getElementById(focus_id).style.height = '90px';
-    			}
-    		}else if(focus_id=="idTheSong"){
-    			//https://(m.youtube.com|www.youtube.com|youtu.be)/"]
-				//請提供正確的youtube連結哦❤
-				
-				re = /https:\/\/(m.youtube.com|www.youtube.com|youtu.be)\//;
-    			if(re.test(text)){
-    				document.getElementById(DIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
-    			}else{
-    				//document.getElementById(DIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-    			}
+    	function submitBtnClicked(){
+    		if(document.getElementById("idSubmitBtn").className.indexOf(" submit_btn ")>=0){
+    			window.parent.googleFormSubmit();    			
+    		}	
+    	}
+    	function submitBtnHover(){
+    		if(document.getElementById("idSubmitBtn").className.indexOf(" submit_btn ")>=0){
+    			document.getElementById("idSubmitBtn").style.cursor='pointer';
+    		}else{
+    			document.getElementById("idSubmitBtn").style.cursor='not-allowed';
     		}
     	}
     
-    	function inputOnBlur(focus_id){
-    		//onblur
-    		var label = focus_id+"_label";
-    		var underline = focus_id+"_underline";
-    		var fbDIV = "idTheOneFb_DIV";
+		function isAllInputValid(bShowErrorMsg){
+			var bBtnEnable=true;
+			var fbDIV = "idTheOneFb_DIV";
     		var wDIV = "idWords_DIV";
     		var sDIV = "idTheSong_DIV";
     		
     		var fbRE = /https:\/\/(m|www).facebook.com\//;
     		var sRE = /https:\/\/(m.youtube.com|www.youtube.com|youtu.be)\//;
     		
-    		var bBtnEnable=true;
+    		
+    		if( !fbRE.test(document.getElementById("idTheOneFb").value)){
+    			if(bShowErrorMsg) document.getElementById(fbDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
+    			bBtnEnable=false;
+    		}else{
+    			document.getElementById(fbDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
+    		}
+			if( document.getElementById("idWords").value.length==0){
+				if(bShowErrorMsg) document.getElementById(wDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
+				bBtnEnable=false;
+    		}else{
+    			document.getElementById(wDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem"; 
+    		}
+			if( !sRE.test(document.getElementById("idTheSong").value)){
+				if(bShowErrorMsg) document.getElementById(sDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
+				bBtnEnable=false;
+    		}else{
+    			document.getElementById(sDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
+    		}
+			
+			if(bBtnEnable){
+				document.getElementById("idSubmitBtn").className = " col-xs-12 col-sm-12 col-md-12 col-lg-12 submit_btn divUnSelectable";
+			}else{
+				document.getElementById("idSubmitBtn").className = " col-xs-12 col-sm-5 col-md-5 col-lg-5 submit_btn_disabled divUnSelectable";
+			}
+		}
+    	function onInput(focus_id){
+    		if(focus_id=="idWords"){
+    			document.getElementById(focus_id).style.overflowY="hidden";
+    			document.getElementById(focus_id).style.marginBottom = "-10px";
+    			//console.log(("#idWords").val().split("/\r|\r\n|\n/").length);
+    			document.getElementById(focus_id).style.height = "auto";
+    			if(document.getElementById(focus_id).scrollHeight<=90){
+    				document.getElementById(focus_id).style.height = (document.getElementById(focus_id).scrollHeight)+ 'px';
+    			}else{
+    				document.getElementById(focus_id).style.overflowY="visible";
+    				document.getElementById(focus_id).style.height = '90px';
+    			}
+    		}
+    		isAllInputValid(false);
+    	}
+    
+    	function inputOnBlur(focus_id){
+    		//onblur
+    		var label = focus_id+"_label";
+    		var underline = focus_id+"_underline";
     		
     		if(document.getElementById(focus_id).value.length==0){
     			document.getElementById(label).style.display="block";
@@ -2275,25 +2305,7 @@
     		document.getElementById(underline).style.bottom="0px";
     		document.getElementById(underline).style.height="1px";
     		
-    		if( !fbRE.test(document.getElementById("idTheOneFb").value)){
-    			document.getElementById(fbDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-    			bBtnEnable=false;
-    		}
-			if( document.getElementById("idWords").value.length==0){
-				document.getElementById(wDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-				bBtnEnable=false;
-    		}else{
-    			bBtnEnable=true;
-    			document.getElementById(wDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
-    		}
-			if( !sRE.test(document.getElementById("idTheSong").value)){
-				document.getElementById(sDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-				bBtnEnable=false;
-    		}
-			
-			if(bBtnEnable){
-				
-			}
+    		isAllInputValid(true);
     	}
     	
     	function inputOnFocus(focus_id){
@@ -2353,7 +2365,10 @@
                                     </div>
                                     <div class="freebirdMaterialHeaderbannerSectionTriangleContainer"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 10 10" preserveAspectRatio="none" class="freebirdMaterialHeaderbannerSectionTriangle"><polygon class="freebirdSolidFill" points="0,0 10,0 0,10"></polygon></svg></div>
                                 </div>
-                                <div class="freebirdFormviewerViewItemsSectionheaderDescriptionText">(1) 點選 <a href="https://www.google.com/url?q=http://goo.gl/pbnEBd&amp;sa=D&amp;ust=1467622807229000&amp;usg=AFQjCNH7gw3GKxIUA_L6IZPUvjqPzT5o_Q">http://goo.gl/pbnEBd</a>.<br>(2) 找到對方<br>(3) 將網址複製過來哦！ 找不到嗎？ 看看教學<a href="https://www.google.com/url?q=http://goo.gl/2hSVcN&amp;sa=D&amp;ust=1467622807229000&amp;usg=AFQjCNEDHk1n_lCdIFejoVrD6bv6W505MQ">http://goo.gl/2hSVcN</a></div>
+                                <div ><br>
+                                	(1) 點選 <a href="http://goo.gl/pbnEBd" target="_blank">http://goo.gl/pbnEBd</a>.<br>
+                                	(2) 找到對方<br>
+                                	(3) 將網址複製過來哦！ 找不到嗎？ 看看教學<a href="http://goo.gl/2hSVcN" target="_blank">http://goo.gl/2hSVcN</a></div>
                                 <div class="freebirdFormviewerViewItemsItemErrorMessage" id="i.err.1797887158" role="alert"></div>
                             </div>
                             <div role="listitem" class="freebirdFormviewerViewItemsItemItem" data-item-id="1945311004">
@@ -2369,7 +2384,10 @@
                                 <div class="freebirdFormviewerViewItemsItemItemheader">
                                     <div class="freebirdFormviewerViewItemsItemItemTitleContainer">
                                         <div class="freebirdFormviewerViewItemsItemItemTitle" role="heading" aria-level="2" aria-describedby="i.desc.1958999976">他的Facebook網址 <span class="freebirdFormviewerViewItemsItemRequiredAsterisk" aria-hidden="true">*</span></div>
-                                        <div class="freebirdFormviewerViewItemsItemItemHelpText" id="i.desc.1958999976" >從這裡開始，點選 <a href="https://www.google.com/url?q=http://goo.gl/pbnEBd&amp;sa=D&amp;ust=1467622807230000&amp;usg=AFQjCNGQtcSJpXYOEMiehem0NQCmSNryaQ">http://goo.gl/pbnEBd</a></div>
+                                        <div class="freebirdFormviewerViewItemsItemItemHelpText" id="i.desc.1958999976" >從這裡開始，點選 
+                                        	<a href="http://goo.gl/pbnEBd" target="_blank">
+                                        	http://goo.gl/pbnEBd</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="freebirdFormviewerViewItemsTextItemWrapper">
@@ -2417,7 +2435,8 @@
                                 <div class="freebirdFormviewerViewItemsItemItemheader">
                                     <div class="freebirdFormviewerViewItemsItemItemTitleContainer">
                                         <div class="freebirdFormviewerViewItemsItemItemTitle" role="heading" aria-level="2" aria-describedby="i.desc.296324480">為他點一首歌吧! <span class="freebirdFormviewerViewItemsItemRequiredAsterisk" aria-hidden="true">*</span></div>
-                                        <div class="freebirdFormviewerViewItemsItemItemHelpText" id="i.desc.296324480" >目前只接受Youtube哦！到這裡尋找 <a href="https://www.google.com/url?q=http://goo.gl/7Z6XfY&amp;sa=D&amp;ust=1467622807231000&amp;usg=AFQjCNEro-fP7VBBZBF_Yo-uG6DQTT_SYw">http://goo.gl/7Z6XfY</a></div>
+                                        <div class="freebirdFormviewerViewItemsItemItemHelpText" id="i.desc.296324480" >
+                                        		目前只接受Youtube哦！到這裡尋找 <a href="http://goo.gl/7Z6XfY" target="_blank">http://goo.gl/7Z6XfY</a></div>
                                     </div>
                                 </div>
                                 <div class="freebirdFormviewerViewItemsTextItemWrapper">
@@ -2444,9 +2463,10 @@
                         <div>
                             <div class="row" >
                                 
-                                <div class=" col-xs-12 col-sm-5 col-md-5 col-lg-5 submit_btn" style="margin-top:3%;"  
-                                	onMouseOver="this.style.cursor='pointer'" 
-                                	onclick="window.parent.googleFormSubmit();">
+                                <div id="idSubmitBtn" 
+                                	class=" col-xs-12 col-sm-5 col-md-5 col-lg-5 submit_btn_disabled divUnSelectable" style="margin-top:3%;"  
+                                	onMouseOver="submitBtnHover();" 
+                                	onclick="submitBtnClicked();">
                                 	傳遞心意                 
                                 </div>
                                 <div class=" col-xs-0 col-sm-1 col-md-1 col-lg-1" > </div>

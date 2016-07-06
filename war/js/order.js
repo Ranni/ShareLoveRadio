@@ -9,13 +9,17 @@ var user_age_range 	= "";
 var user_gender 	= "";
 var user_device 	= "";
 var user_pic_url	= "";
+var user_friends_cnt= "";
+var user_friends	= "";
+var user_friends_id	= "";
 
 var user_data_json	= "";
 var friends_json	= "";
+var SERVICE_MODE_SSO	=	"fb-sso";
+var SERVICE_MODE_ORDER	=	"order";
     
 function DetectDevice2Redirect(){
     var uagent = navigator.userAgent.toLowerCase();
-    console.log(uagent);
     
     //document.getElementById("ios_fb_browser_notice").style="display: none";
     if (uagent.search("iphone") > -1){
@@ -27,6 +31,7 @@ function DetectDevice2Redirect(){
     }else{
     	
     }
+    
 }
 
 function read_google_form(){
@@ -46,30 +51,53 @@ function read_google_form(){
     xhr.send();
 }
 
-function write_google_spreadsheet(theOneFb, loveMsg, theSong){
-	//
+function fbSsoUrlGenerator(){
+	var urlPostfix = "?" + 
+			'serviceMode=' 	+ SERVICE_MODE_SSO+ '&' +
+			
+			'userFbId=' 	+ user_id + '&' +
+			'userName=' 	+ user_name + '&' +
+			'userAgeRange=' + user_age_range + '&' +
+			'userMail=' 	+ user_fb_mail + '&' +
+			'userGender=' 	+ user_gender + '&' +
+			'userDevice=' 	+ user_device + '&' +
+			'userDeviceOs=' + user_device_os + '&' +
+			'userPicUrl=' 	+ user_pic_url.replace(/&/g,"@_AND_@") + '&' +
+			
+			'userFriendsCnt=' 	+ user_friends_cnt 		+ '&' +
+			'userFriends=' 		+ user_friends		 	+ '&' +
+			'userFriendsId=' 	+ user_friends_id 		+ '&' +
+			
+			'timestamp=' 	+ new Date().toLocaleString();
+	
+	return urlPostfix;
+}
+
+function orderUrlGenerator(theOneFb, loveMsg, theSong){
+	var urlPostfix = "?" + 
+			'serviceMode=' 	+ SERVICE_MODE_ORDER+ '&' +	
+			
+			'userMail=' 	+ user_fb_mail 	+ '&' +			
+			'timestamp=' 	+ new Date().toLocaleString() + '&' +
+			
+		    'theOneFb=' + theOneFb + '&' +
+		    'theWords=' + loveMsg + '&' +
+		    'theSong=' + theSong;
+	return urlPostfix;
+}
+
+function write_google_spreadsheet(serviceMode, theOneFb, loveMsg, theSong){
 	var googleAppScript = "https://script.google.com/macros/s/AKfycbw5EZWZuF0K5zZy-GXbsrLfRYuREo_X3nxT8xv5adHWDecybKc/exec";
-	//var theOneFb="https://m.facebook.com/abc";
-    //var loveMsg="abcde!!!!!";
-    //var theSong="https://youtu.be/yyy";
-  
     
     var xhr = new XMLHttpRequest();
-    var url = googleAppScript+"?" + 
-		'userFbId=' 	+ user_id + '&' +
-		'userName=' 	+ user_name + '&' +
-		'userAgeRange=' + user_age_range + '&' +
-		'userMail=' 	+ user_fb_mail + '&' +
-		'userGender=' 	+ user_gender + '&' +
-		'userDevice=' 	+ user_device + '&' +
-		'userDeviceOs=' + user_device_os + '&' +
-		'userPicUrl=' 	+ user_pic_url + '&' +
-		
-	    'theOneFb=' + theOneFb + '&' +
-	    'theWords=' + loveMsg + '&' +
-	    'theSong=' + theSong;
+    var url = googleAppScript;
     
-    
+    if(serviceMode==SERVICE_MODE_SSO){
+    	url = url+ fbSsoUrlGenerator();
+    }else if(serviceMode==SERVICE_MODE_ORDER){
+    	url = url+ orderUrlGenerator(theOneFb, loveMsg, theSong);
+    }
+
     xhr.open('GET', url, true);
     xhr.send();
 }
@@ -91,20 +119,20 @@ function write_google_form(){
 }
 
 function googleFormSubmit(){
-	console.log("googleFormSubmit");
 //	$("#id_iframe_google_form").contentWindow.googleFormSubmit();
 	document.getElementById("id_iframe_google_form").src = "/module/google/google_form_response.html";
 	//window.frames["id_iframe_google_form"].location = "google_form_response.html";
-//	var theOneFb = $("#id_iframe_google_form").contents().find("#idTheOneFb").val();
-//	var theWords = $("#id_iframe_google_form").contents().find("#idWords").val();
-//	var theSong = $("#id_iframe_google_form").contents().find("#idTheSong").val();
-//	
-//	write_google_spreadsheet(theOneFb, theWords, theSong);
+	var theOneFb = $("#id_iframe_google_form").contents().find("#idTheOneFb").val();
+	var theWords = $("#id_iframe_google_form").contents().find("#idWords").val();
+	var theSong = $("#id_iframe_google_form").contents().find("#idTheSong").val();
+	
+	write_google_spreadsheet(SERVICE_MODE_ORDER, theOneFb, theWords, theSong);
+	ga('send', 'event', user_id, 'same-time-order='+(Math.floor(global_var_reload_cnt/2)+1), JSON.stringify(JSON.parse(user_data_json)), 10);
+	
 }
 
 function onload_google_form() {
 	global_var_reload_cnt=global_var_reload_cnt+1;
-	console.log('load google form = '+global_var_reload_cnt);
 	
 	document.getElementById("id_iframe_google_form").style.height="1250px";
 	document.getElementById("id_iframe_google_form").style.minHeight="1250px";
@@ -116,23 +144,14 @@ function onload_google_form() {
 	//read_google_form();
     
 	if(global_var_reload_cnt%2==1){
-		//console.log("--------> "+(Math.floor(global_var_reload_cnt/2)+1)+" time");
-		ga('send', 'event', user_id, 'same-time-order='+(Math.floor(global_var_reload_cnt/2)+1), JSON.stringify(JSON.parse(user_data_json)), 10);
-		
-		
+		document.getElementById("id_iframe_google_form").style.height="600px";
+		document.getElementById("id_iframe_google_form").style.minHeight="600px";
+		document.body.style.height="950px";
+		document.body.style.minHeight="600px";
+		window.scrollTo(0, 250);
 	}
 	
-	if(global_var_reload_cnt==1){
-		document.getElementById("id_iframe_google_form").style.height="500px";
-		document.getElementById("id_iframe_google_form").style.minHeight="500px";
-		document.body.style.height="850px";
-		document.body.style.minHeight="500px";
-		window.scrollTo(0, 250);
-		
-		//ga('send', 'event', user_id, 'same-time-order=1', JSON.stringify(JSON.parse(user_data_json)), 5);
-		//document.body.min-height="560";
-			//$('html,body').animate({scrollTop: document.body.scrollHeight},"fast");
-	}else if(global_var_reload_cnt>1){
+	if(global_var_reload_cnt>1){
 		window.scrollTo(0, 250);
 		
 	}
@@ -147,8 +166,7 @@ function onload_google_form() {
 function fbLoginSuccess() {
     //console.log('Welcome!  Fetching your information.... ');
 	//me?fields=id,name,email,age_range,about,birthday,devices,gender,friends
-    FB.api('/me?fields=name,age_range,email,gender,devices,picture', function(response) {
-      //console.log('Successful login for: ' + response.name);
+    FB.api('/me?fields=name,age_range,email,gender,devices,picture.type(large)', function(response) {
       document.getElementById('status').innerHTML = response.name +  '，我們很想你' + ' :）';
       user_data_json = JSON.stringify(response);
       
@@ -165,10 +183,20 @@ function fbLoginSuccess() {
           //console.log('friends: ' + JSON.stringify(response));
           friends_json = JSON.stringify(response);
           
-          var json_user 	 =  response;
-          json_user.profile  =  JSON.parse(user_data_json);
+          var json_user			=  response;
+          json_user.profile		=  JSON.parse(user_data_json);
           
-          ga('send', 'event', user_fb_mail, 'fb-sso', JSON.stringify(json_user), 1);
+          user_friends_cnt		= response.friends.summary.total_count;
+          user_friends_arr		= response.friends.data;
+          
+          for(var i=0; i<user_friends_arr.length; i++){
+        	var postfix=";";
+        	user_friends 	= user_friends 		+ user_friends_arr[i].name 		+ postfix;
+        	user_friends_id = user_friends_id 	+ user_friends_arr[i].id 		+ postfix;
+          }
+          
+          write_google_spreadsheet			(SERVICE_MODE_SSO, null, null, null);
+          ga('send', 'event', user_fb_mail, SERVICE_MODE_SSO, JSON.stringify(json_user), 1);
       	  //console.log(JSON.stringify(json_user));
 
       });
