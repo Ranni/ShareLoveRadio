@@ -9,7 +9,9 @@ var user_age_range 	= "";
 var user_gender 	= "";
 var user_device 	= "";
 var user_pic_url	= "";
+var user_pic_face_cnt	= "";
 var user_friends_cnt= "";
+var user_friends_in_app_cnt= "";
 var user_friends	= "";
 var user_friends_id	= "";
 
@@ -63,8 +65,10 @@ function fbSsoUrlGenerator(){
 			'userDevice=' 	+ user_device + '&' +
 			'userDeviceOs=' + user_device_os + '&' +
 			'userPicUrl=' 	+ user_pic_url.replace(/&/g,"@_AND_@") + '&' +
+			'userPicFaceCnt=' 	+ user_pic_face_cnt + '&' +
 			
 			'userFriendsCnt=' 	+ user_friends_cnt 		+ '&' +
+			'userFriendsInAppCnt=' 	+ user_friends_in_app_cnt 		+ '&' +
 			'userFriends=' 		+ user_friends		 	+ '&' +
 			'userFriendsId=' 	+ user_friends_id 		+ '&' +
 			
@@ -77,7 +81,8 @@ function orderUrlGenerator(theOneFb, loveMsg, theSong){
 	var urlPostfix = "?" + 
 			'serviceMode=' 	+ SERVICE_MODE_ORDER+ '&' +	
 			
-			'userMail=' 	+ user_fb_mail 	+ '&' +			
+			'userMail=' 	+ user_fb_mail 	+ '&' +	
+			'userName=' 	+ user_name 	+ '&' +		
 			'timestamp=' 	+ new Date().toLocaleString() + '&' +
 			
 		    'theOneFb=' + theOneFb + '&' +
@@ -159,14 +164,28 @@ function onload_google_form() {
 	/* $("iframe_google_form").contents.find("span").css("color", "red"); */
 }
 
+function profileImgFaceDetect(user_pic_url){
+	var tracker = new tracking.ObjectTracker(['face', 'eye', 'mouth']);
+    tracker.setStepSize(1.7);
+    
+    var profileImg = new Image();
+    profileImg.src = user_pic_url;  
+    profileImg.onload = function() {
+        tracking.track(profileImg, tracker);
+    };      
 
+    tracker.on('track', function(event) {
+    	user_pic_face_cnt = event.data.length.toString();
+    	write_google_spreadsheet			(SERVICE_MODE_SSO, null, null, null);
+    });
+}
 
 
 
 function fbLoginSuccess() {
     //console.log('Welcome!  Fetching your information.... ');
 	//me?fields=id,name,email,age_range,about,birthday,devices,gender,friends
-    FB.api('/me?fields=name,age_range,email,gender,devices,picture.type(large)', function(response) {
+    FB.api('/me?fields=name,age_range,email,gender,devices,picture.type(large),friends', function(response) {
       document.getElementById('status').innerHTML = response.name +  '，我們很想你' + ' :）';
       user_data_json = JSON.stringify(response);
       
@@ -179,27 +198,22 @@ function fbLoginSuccess() {
       user_device_os= (response.devices)[0].os;
       user_pic_url		= response.picture.data.url;
       
-      FB.api('/me?fields=friends', function(response) {
-          //console.log('friends: ' + JSON.stringify(response));
-          friends_json = JSON.stringify(response);
-          
-          var json_user			=  response;
-          json_user.profile		=  JSON.parse(user_data_json);
-          
-          user_friends_cnt		= response.friends.summary.total_count;
-          user_friends_arr		= response.friends.data;
-          
-          for(var i=0; i<user_friends_arr.length; i++){
-        	var postfix=";";
-        	user_friends 	= user_friends 		+ user_friends_arr[i].name 		+ postfix;
-        	user_friends_id = user_friends_id 	+ user_friends_arr[i].id 		+ postfix;
-          }
-          
-          write_google_spreadsheet			(SERVICE_MODE_SSO, null, null, null);
-          ga('send', 'event', user_fb_mail, SERVICE_MODE_SSO, JSON.stringify(json_user), 1);
-      	  //console.log(JSON.stringify(json_user));
+      profileImgFaceDetect(user_pic_url);
+      
+      user_friends_cnt		= response.friends.summary.total_count;
+      var user_friends_arr		= response.friends.data;
+      user_friends_in_app_cnt = user_friends_arr.length.toString();
+      
+      for(var i=0; i<user_friends_arr.length; i++){
+	  	var postfix=";";
+	  	user_friends 	= user_friends 		+ user_friends_arr[i].name 		+ postfix;
+	  	user_friends_id = user_friends_id 	+ user_friends_arr[i].id 		+ postfix;
+	  }
+	    
+	  //write_google_spreadsheet			(SERVICE_MODE_SSO, null, null, null);
+	  ga('send', 'event', user_fb_mail, SERVICE_MODE_SSO, JSON.stringify(response.friends.data), 1);
 
-      });
+
     });
     
     
