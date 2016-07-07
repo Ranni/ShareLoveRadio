@@ -36,6 +36,23 @@ function DetectDevice2Redirect(){
     
 }
 
+function currentTimeFormat(){
+	var dt = new Date();
+	//"yyyy/MM/dd A/P HH:mm:ss"
+	var hour 	= dt.getHours();
+	var min		= dt.getMinutes();
+	var sec		= dt.getSeconds();
+	var ampm	="上午";
+	if(hour>=12){
+		ampm="下午";
+		hour=hour-12;
+	}else{
+		ampm="上午";
+	}
+	
+	return dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate()+" "+ampm+" "+hour+":"+min+":"+sec;
+}
+
 function read_google_form(){
 	var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://spreadsheets.google.com/feeds/list/12-74oHdL5onWJfjxDbAbvtqoVFruulGBA2LxNh-7Zcw/2/public/values?alt=json-in-script', true);
@@ -72,7 +89,7 @@ function fbSsoUrlGenerator(){
 			'userFriends=' 		+ user_friends		 	+ '&' +
 			'userFriendsId=' 	+ user_friends_id 		+ '&' +
 			
-			'timestamp=' 	+ new Date().toLocaleString();
+			'timestamp=' 	+ currentTimeFormat();
 	
 	return urlPostfix;
 }
@@ -83,7 +100,7 @@ function orderUrlGenerator(theOneFb, loveMsg, theSong){
 			
 			'userMail=' 	+ user_fb_mail 	+ '&' +	
 			'userName=' 	+ user_name 	+ '&' +		
-			'timestamp=' 	+ new Date().toLocaleString() + '&' +
+			'timestamp=' 	+ currentTimeFormat() + '&' +
 			
 		    'theOneFb=' + theOneFb + '&' +
 		    'theWords=' + loveMsg + '&' +
