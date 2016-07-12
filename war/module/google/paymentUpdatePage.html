@@ -5,12 +5,25 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-    <title>紙飛機➣訂單</title>
+    <title>紙飛機➣機器人收款</title>
     <link rel="stylesheet" href="../../css/google_form.css" data-id="_cl">
     <link href="../../css/google_form_font.css" rel="stylesheet" type="text/css">
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/google_form_radio.css" rel="stylesheet">
+    
     
     <style id="WTVccd">
+    
+    	.freebirdThemedRadio.isChecked:not(.isDisabled) .exportOuterCircle,
+	    .freebirdThemedRadio .exportInnerCircle {
+	        border-color: rgb(86, 86, 86);
+	    }
+	    
+	    .freebirdThemedRadio.isCheckedNext> .exportInk,
+	    .freebirdThemedRadio.isFocused> .exportInk {
+	        background-color: rgba(86, 86, 86, 0.15);
+	    }
+	    
         .freebirdThemedTab .exportTab .freebirdThemedBadge {
             background-color: rgba(0, 0, 0, 0.5);
         }
@@ -2171,6 +2184,20 @@
     </style>
     	
     <style>
+    	.radioButton{
+    		height: 20px;
+    		width:  20px;
+  			/* vertical-align: middle;*/
+    	}
+    	.radioText{
+    		
+    		font-size: 1.1em;
+    		/* text-align:center; */
+    		font-weight: bold;
+    		margin-left: 10px;
+    		
+    	}
+    	
     	.divUnSelectable{
 			-moz-user-select: -moz-none;
 		    -khtml-user-select: none;
@@ -2187,7 +2214,7 @@
 		}
     	
     	.submit_btn {
-    		height: 50px;
+    		height: 100px;
     		border-radius: 8px;
 			border: #1D4B7F solid 1px;
 			background-color: #4267B2;
@@ -2225,11 +2252,23 @@
     </style>
     
     <script type="text/javascript">
+    	
+    
     	function submitBtnClicked(){
-    		if(document.getElementById("idSubmitBtn").className.indexOf(" submit_btn ")>=0){
-    			window.parent.googleFormSubmit();    			
-    		}	
+   			var googleAppScript = "https://script.google.com/macros/s/AKfycbw5EZWZuF0K5zZy-GXbsrLfRYuREo_X3nxT8xv5adHWDecybKc/exec?serviceMode=updatePayment";
+   
+		    var xhr = new XMLHttpRequest();
+		    var url = googleAppScript;
+		    
+		    var rowId 		= document.getElementById("rowIdInput").value;
+		    var encodeUrl 	= encodeURIComponent(document.getElementById("urlInput").value);
+		    url = url+ "&rowId="+rowId;
+		    url = url+ "&paymentUrl="+encodeUrl;
+		    
+		    xhr.open('GET', url, true);
+		    xhr.send();
     	}
+    	
     	function submitBtnHover(){
     		if(document.getElementById("idSubmitBtn").className.indexOf(" submit_btn ")>=0){
     			document.getElementById("idSubmitBtn").style.cursor='pointer';
@@ -2237,42 +2276,7 @@
     			document.getElementById("idSubmitBtn").style.cursor='not-allowed';
     		}
     	}
-    
-		function isAllInputValid(bShowErrorMsg){
-			var bBtnEnable=true;
-			var fbDIV = "idTheOneFb_DIV";
-    		var wDIV = "idWords_DIV";
-    		var sDIV = "idTheSong_DIV";
-    		
-    		var fbRE = /https:\/\/(m|www).facebook.com\//;
-    		var sRE = /https:\/\/(m.youtube.com|www.youtube.com|youtu.be)\//;
-    		
-    		
-    		if( !fbRE.test(document.getElementById("idTheOneFb").value)){
-    			if(bShowErrorMsg) document.getElementById(fbDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-    			bBtnEnable=false;
-    		}else{
-    			document.getElementById(fbDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
-    		}
-			if( document.getElementById("idWords").value.length==0){
-				if(bShowErrorMsg) document.getElementById(wDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-				bBtnEnable=false;
-    		}else{
-    			document.getElementById(wDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem"; 
-    		}
-			if( !sRE.test(document.getElementById("idTheSong").value)){
-				if(bShowErrorMsg) document.getElementById(sDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsItemHasError";
-				bBtnEnable=false;
-    		}else{
-    			document.getElementById(sDIV).className= "freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem";
-    		}
-			
-			if(bBtnEnable){
-				document.getElementById("idSubmitBtn").className = " col-xs-12 col-sm-12 col-md-12 col-lg-12 submit_btn divUnSelectable";
-			}else{
-				document.getElementById("idSubmitBtn").className = " col-xs-12 col-sm-5 col-md-5 col-lg-5 submit_btn_disabled divUnSelectable";
-			}
-		}
+    	
     	function onInput(focus_id){
     		if(focus_id=="idWords"){
     			document.getElementById(focus_id).style.overflowY="hidden";
@@ -2286,7 +2290,7 @@
     				document.getElementById(focus_id).style.height = '90px';
     			}
     		}
-    		isAllInputValid(false);
+    		//isAllInputValid(false);
     	}
     
     	function inputOnBlur(focus_id){
@@ -2305,7 +2309,7 @@
     		document.getElementById(underline).style.bottom="0px";
     		document.getElementById(underline).style.height="1px";
     		
-    		isAllInputValid(true);
+    		//isAllInputValid(true);
     	}
     	
     	function inputOnFocus(focus_id){
@@ -2324,216 +2328,65 @@
         		document.getElementById(underline).style.height="2px";
     		}
     	}
+		
     	
     </script>
     
 </head>
 
-<body class="freebirdLightBackground" data-is-prepopulate-mode="false" >
+<body class="freebirdLightBackground"  style="padding:80px">
     
-    <div class="freebirdFormviewerViewFormContentWrapper">
-        <div class="freebirdFormviewerViewFormBanner freebirdHeaderMast">
-            <div class="freebirdFormviewerViewNavigationHeaderButton">
-                <div role="button" 
-                	class="quantumWizButtonPaperbuttonEl quantumWizButtonPaperbuttonFlat quantumWizButtonPaperbutton2El2 freebirdFormviewerViewEditIconButton freebirdAccentBackground" 
-                	aria-label="編輯這個表單" aria-disabled="false" tabindex="0" data-tooltip="編輯這個表單" data-redirect-url="https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/edit" data-target="_self">
-                    <div class="quantumWizButtonPaperbuttonRipple exportInk"></div>
-                    <div class="quantumWizButtonPaperbuttonFocusOverlay exportOverlay"></div>
-                </div>
-            </div>
+    <div class="freebirdMaterialHeaderbannerLabelContainer freebirdFormviewerViewItemsSectionheaderBanner" role="heading">
+       <div class="freebirdMaterialHeaderbannerLabelTextContainer freebirdSolidBackground">
+           <div class="freebirdMaterialHeaderbannerSectionText freebirdFormviewerViewItemsSectionheaderBannerText">訂單編號</div>
+       </div>
+       <div class="freebirdMaterialHeaderbannerSectionTriangleContainer">
+       <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 10 10" preserveAspectRatio="none" class="freebirdMaterialHeaderbannerSectionTriangle"><polygon class="freebirdSolidFill" points="0,0 10,0 0,10"></polygon></svg></div>
+    	
+    	
+    	<div class="quantumWizTextinputPaperinputInputArea"  style="margin-left: 30px">
+        	<input id="rowIdInput" type="text" 
+        		class="googleFormInput quantumWizTextinputPaperinputInput exportInput"        		
+        		autocomplete="off"  
+        		onfocus="inputOnFocus(this.id);" onblur="inputOnBlur(this.id);"  oninput="onInput(this.id);" >
+            <div id="rowIdInput_label" class="quantumWizTextinputPaperinputPlaceholder exportLabel">請填入訂單編號</div>
+            <div id="rowIdInput_underline" class="quantumWizTextinputPaperinputUnderline exportUnderline"></div>
+                                                
         </div>
-        <div class="freebirdFormviewerViewCenteredContent">
-            <form action="https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/formResponse" target="_self" method="POST" id="mG61Hd">
-                <div class="freebirdFormviewerViewFormCard">
-                    <div class="freebirdFormviewerViewAccentBanner freebirdAccentBackground"></div>
-                    <div class="freebirdFormviewerViewFormContent ">
-                        <div class="freebirdFormviewerViewHeaderHeader">
-                            <div class="freebirdFormviewerViewHeaderTitleRow">
-                                <div class="freebirdFormviewerViewHeaderTitle" role="heading" aria-level="1">紙飛機➣訂單</div>
-                            </div>
-                            <div class="freebirdFormviewerViewHeaderDescription">為你溫暖傳遞❤</div>
-                            <div class="freebirdFormviewerViewHeaderRequiredLegend" aria-hidden="true" >*必填</div>
-                        </div>
-                        <div class="freebirdFormviewerViewItemList" role="list">
-                            <div role="listitem" class="freebirdFormviewerViewItemsItemItem" data-item-id="1797887158">
-                                <div class="freebirdMaterialHeaderbannerLabelContainer freebirdFormviewerViewItemsSectionheaderBanner" role="heading">
-                                    <div class="freebirdMaterialHeaderbannerLabelTextContainer freebirdSolidBackground">
-                                        <div class="freebirdMaterialHeaderbannerSectionText freebirdFormviewerViewItemsSectionheaderBannerText">開口說愛，讓愛遠傳</div>
-                                    </div>
-                                    <div class="freebirdMaterialHeaderbannerSectionTriangleContainer"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 10 10" preserveAspectRatio="none" class="freebirdMaterialHeaderbannerSectionTriangle"><polygon class="freebirdSolidFill" points="0,0 10,0 0,10"></polygon></svg></div>
-                                </div>
-                                <div ><br>
-                                	(1) 點選 <a href="http://goo.gl/pbnEBd" target="_blank">http://goo.gl/pbnEBd</a>.<br>
-                                	(2) 找到對方<br>
-                                	(3) 將網址複製過來哦！ 找不到嗎？ 看看教學<a href="http://goo.gl/2hSVcN" target="_blank">http://goo.gl/2hSVcN</a></div>
-                                <div class="freebirdFormviewerViewItemsItemErrorMessage" id="i.err.1797887158" role="alert"></div>
-                            </div>
-                            <div role="listitem" class="freebirdFormviewerViewItemsItemItem" data-item-id="1945311004">
-                                <div class="freebirdMaterialHeaderbannerLabelContainer freebirdFormviewerViewItemsSectionheaderBanner" role="heading">
-                                    <div class="freebirdMaterialHeaderbannerLabelTextContainer freebirdSolidBackground">
-                                        <div class="freebirdMaterialHeaderbannerSectionText freebirdFormviewerViewItemsSectionheaderBannerText">填寫紙條</div>
-                                    </div>
-                                    <div class="freebirdMaterialHeaderbannerSectionTriangleContainer"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 10 10" preserveAspectRatio="none" class="freebirdMaterialHeaderbannerSectionTriangle"><polygon class="freebirdSolidFill" points="0,0 10,0 0,10"></polygon></svg></div>
-                                </div>
-                                <div class="freebirdFormviewerViewItemsItemErrorMessage" id="i.err.1945311004" role="alert"></div>
-                            </div>
-                            <div id="idTheOneFb_DIV" role="listitem" class="freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem" data-required="true" data-input="L9xHkb" data-item-id="1958999976">
-                                <div class="freebirdFormviewerViewItemsItemItemheader">
-                                    <div class="freebirdFormviewerViewItemsItemItemTitleContainer">
-                                        <div class="freebirdFormviewerViewItemsItemItemTitle" role="heading" aria-level="2" aria-describedby="i.desc.1958999976">他的Facebook網址 <span class="freebirdFormviewerViewItemsItemRequiredAsterisk" aria-hidden="true">*</span></div>
-                                        <div class="freebirdFormviewerViewItemsItemItemHelpText" id="i.desc.1958999976" >從這裡開始，點選 
-                                        	<a href="http://goo.gl/pbnEBd" target="_blank">
-                                        	http://goo.gl/pbnEBd</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="freebirdFormviewerViewItemsTextItemWrapper">
-                                    <div class="quantumWizTextinputPaperinputEl freebirdFormviewerViewItemsTextShortText freebirdThemedInput" >
-                                        <div class="quantumWizTextinputPaperinputMainContent exportContent">
-                                            <div class="quantumWizTextinputPaperinputContentArea">
-                                                <div class="quantumWizTextinputPaperinputInputArea">
-                                                	<input id="idTheOneFb" type="text" class="googleFormInput quantumWizTextinputPaperinputInput exportInput"
-                                                		onfocus="inputOnFocus(this.id);" onblur="inputOnBlur(this.id);"  oninput="onInput(this.id);" 
-                                                		autocomplete="off" tabindex="0" aria-label="他的Facebook網址" aria-describedby="i.desc.1958999976 i.err.1958999976" name="紙飛機➣訂單" value="" required="" dir="auto" data-initial-dir="auto" data-initial-value="">
-                                                    <div id="idTheOneFb_label" class="quantumWizTextinputPaperinputPlaceholder exportLabel">您的回答</div>
-                                                </div>
-                                                <div id="idTheOneFb_underline" class="quantumWizTextinputPaperinputUnderline exportUnderline"></div>
-                                                <!-- <div class="quantumWizTextinputPaperinputFocusUnderline exportFocusUnderline"></div> -->
-                                            </div>
-                                        </div>
-                                        <div class="quantumWizTextinputPaperinputHint exportHint"></div>
-                                    </div>
-                                </div><!-- <input type="hidden" name="entry.1951458406" jsname="L9xHkb"> -->
-                                <div class="freebirdFormviewerViewItemsItemErrorMessage" id="i.err.1958999976" role="alert">請提供正確facebook連結喔❤</div>
-                            </div>
-                            <div id="idWords_DIV" role="listitem" class="freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem" data-required="true" data-input="L9xHkb" data-item-id="748532456">
-                                <div class="freebirdFormviewerViewItemsItemItemheader">
-                                    <div class="freebirdFormviewerViewItemsItemItemTitleContainer">
-                                        <div class="freebirdFormviewerViewItemsItemItemTitle" role="heading" aria-level="2" aria-describedby="i.desc.748532456">想對他說的話 <span class="freebirdFormviewerViewItemsItemRequiredAsterisk" aria-hidden="true">*</span></div>
-                                        <div class="freebirdFormviewerViewItemsItemItemHelpText" id="i.desc.748532456" ></div>
-                                    </div>
-                                </div>
-                                <div class="quantumWizTextinputPapertextareaEl modeLight freebirdFormviewerViewItemsTextLongText freebirdThemedInput" jscontroller="pxq3x" jsaction="clickonly:KjsqPd; focus:Jt1EX; blur:fpfTEe; input:Lg5SV;" jsshadow="" jsname="W85ice">
-                                    <div class="quantumWizTextinputPapertextareaMainContent exportContent">
-                                        <div id="idWords_label" class="quantumWizTextinputPapertextareaPlaceholder exportLabel" >您的回答</div>
-                                        <div class="quantumWizTextinputPapertextareaContentArea exportContentArea">
-                                        	<textarea id="idWords" class="googleFormInput quantumWizTextinputPapertextareaInput exportTextarea" 
-                                        		onfocus="inputOnFocus(this.id);" onblur="inputOnBlur(this.id);" oninput="onInput(this.id);" 
-                                        		rows="1" tabindex="0" aria-label="想對他說的話" name="紙飛機➣訂單" data-initial-dir="auto" data-initial-value=""></textarea>
-                                        </div>
-                                        <div id="idWords_underline" class="quantumWizTextinputPapertextareaUnderline exportUnderline"></div>
-                                        <!-- <div class="quantumWizTextinputPapertextareaFocusUnderline exportFocusUnderline"></div> -->
-                                    </div>
-                                    <div class="quantumWizTextinputPapertextareaHint exportHint"></div>
-                                </div><!-- <input type="hidden" name="entry.1826836959" jsname="L9xHkb"> -->
-                                <div class="freebirdFormviewerViewItemsItemErrorMessage" id="i.err.748532456" role="alert">再忙也要和他說ㄧ句話唷❤</div>
-                            </div>
-                            <div id="idTheSong_DIV" role="listitem" class="freebirdFormviewerViewItemsItemItem freebirdFormviewerViewItemsTextTextItem" data-required="true" data-input="L9xHkb" data-item-id="296324480">
-                                <div class="freebirdFormviewerViewItemsItemItemheader">
-                                    <div class="freebirdFormviewerViewItemsItemItemTitleContainer">
-                                        <div class="freebirdFormviewerViewItemsItemItemTitle" role="heading" aria-level="2" aria-describedby="i.desc.296324480">為他點一首歌吧! <span class="freebirdFormviewerViewItemsItemRequiredAsterisk" aria-hidden="true">*</span></div>
-                                        <div class="freebirdFormviewerViewItemsItemItemHelpText" id="i.desc.296324480" >
-                                        		目前只接受Youtube哦！到這裡尋找 <a href="http://goo.gl/7Z6XfY" target="_blank">http://goo.gl/7Z6XfY</a></div>
-                                    </div>
-                                </div>
-                                <div class="freebirdFormviewerViewItemsTextItemWrapper">
-                                    <div class="quantumWizTextinputPaperinputEl freebirdFormviewerViewItemsTextShortText freebirdThemedInput" >
-                                        <div class="quantumWizTextinputPaperinputMainContent exportContent">
-                                            <div class="quantumWizTextinputPaperinputContentArea">
-                                                <div class="quantumWizTextinputPaperinputInputArea">
-                                                	<input id="idTheSong"  type="text" class="googleFormInput quantumWizTextinputPaperinputInput exportInput" 
-	                                                	onfocus="inputOnFocus(this.id);" onblur="inputOnBlur(this.id);"  oninput="onInput(this.id);" 
-	                                                	autocomplete="off" tabindex="0" aria-label="為他點一首歌吧!" aria-describedby="i.desc.296324480 i.err.296324480" 
-	                                                	name="紙飛機➣訂單" value="" data-initial-dir="auto" data-initial-value="">
-                                                    <div id="idTheSong_label" class="quantumWizTextinputPaperinputPlaceholder exportLabel">您的回答</div>
-                                                </div>
-                                                <div id="idTheSong_underline" class="quantumWizTextinputPaperinputUnderline exportUnderline"></div>
-                                               <!-- <div class="quantumWizTextinputPaperinputFocusUnderline exportFocusUnderline"></div> -->
-                                            </div>
-                                        </div>
-                                        <div class="quantumWizTextinputPaperinputHint exportHint"></div>
-                                    </div>
-                                </div><!-- <input type="hidden" name="entry.2017693091" jsname="L9xHkb"> -->
-                                <div class="freebirdFormviewerViewItemsItemErrorMessage" id="i.err.296324480" role="alert">請提供正確的youtube連結哦❤</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="row" >
-                                
-                                <div id="idSubmitBtn" 
-                                	class=" col-xs-12 col-sm-5 col-md-5 col-lg-5 submit_btn_disabled divUnSelectable" style="margin-top:3%;"  
-                                	onMouseOver="submitBtnHover();" 
-                                	onclick="submitBtnClicked();">
-                                	傳遞心意                 
-                                </div>
-                                <div class=" col-xs-0 col-sm-1 col-md-1 col-lg-1" > </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 " style="margin-top:6%;">
-                                    <div class="freebirdFormviewerViewNavigationProgressIndicator" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-labelledby="lpd4pf" role="progressbar">
-                                        <div class="freebirdFormviewerViewNavigationProgressIndicatorFill done" style="width:100%"></div>
-                                    </div>
-                                    <div id="lpd4pf" class="freebirdFormviewerViewNavigationPercentComplete" aria-hidden="true">100%：恭喜完成！</div>
-                                </div>
-                            </div>
-                            <div class="freebirdFormviewerViewNavigationPasswordWarning">請勿利用 Google 表單送出密碼。</div>
-                        </div>
-                        	<input type="hidden" name="fvv" value="1">
-                        	<input type="hidden" name="draftResponse" value="[,,&quot;-5665452678739459175&quot;]">
-                        	<input type="hidden" name="pageHistory" value="0">
-                        	<input type="hidden" name="fbzx" value="-5665452678739459175"></div>
-                </div>
-            </form>
-            <div>
-                <div class="freebirdFormviewerViewFooterDisclaimer freebirdFormviewerViewFooterNoTextDecoration freebirdDisclaimerColor">Google 並未認可或建立這項內容。 <a href="https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/reportabuse?source=https://docs.google.com/forms/d/1r6H63gi17BUJtcAM5EFODJeHOJ3Y4t5p-zF8l_TWrSU/viewform">檢舉濫用情形</a> - <a href="http://www.google.com/accounts/TOS">服務條款</a> - <a href="http://www.google.com/google-d-s/terms.html">其他條款</a></div>
-                <div class="freebirdFormviewerViewFooterImageContainer freebirdFormviewerViewFooterPageBreak">
-                    <a href="//www.google.com/forms/about/?utm_source=product&amp;utm_medium=forms_logo&amp;utm_campaign=forms"><img src="//ssl.gstatic.com/docs/forms/google_forms_logo_lockup_2.svg" alt="Google 表單"></a>
-                </div>
+    </div>
+    <br><br><br><br><br>
+    
+    <div class="freebirdMaterialHeaderbannerLabelContainer freebirdFormviewerViewItemsSectionheaderBanner" role="heading">
+       <div class="freebirdMaterialHeaderbannerLabelTextContainer freebirdSolidBackground">
+           <div class="freebirdMaterialHeaderbannerSectionText freebirdFormviewerViewItemsSectionheaderBannerText">訂單URL</div>
+       </div>
+       <div class="freebirdMaterialHeaderbannerSectionTriangleContainer"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 10 10" preserveAspectRatio="none" class="freebirdMaterialHeaderbannerSectionTriangle"><polygon class="freebirdSolidFill" points="0,0 10,0 0,10"></polygon></svg></div>
+   		
+   		
+   		<div class="quantumWizTextinputPaperinputInputArea"  style="margin-left: 30px">
+        	<input id="urlInput" type="text" 
+        		class="googleFormInput quantumWizTextinputPaperinputInput exportInput"        		
+        		autocomplete="off"  style="font-size:1.4em"
+        		onfocus="inputOnFocus(this.id);" onblur="inputOnBlur(this.id);"  oninput="onInput(this.id);" >
+            <div id="urlInput_label" class="quantumWizTextinputPaperinputPlaceholder exportLabel">請填入url</div>
+            <div id="urlInput_underline" class="quantumWizTextinputPaperinputUnderline exportUnderline"></div>
+                                                
+        </div>
+   </div>
+    
+    <div>
+        <div class="row" >
+            
+            <div id="idSubmitBtn" 
+            	class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 submit_btn " style="margin-top:100px;"  
+            	onMouseOver="submitBtnHover();" 
+            	onclick="submitBtnClicked();">
+            	資料更新           
             </div>
+            
         </div>
         
     </div>
     
 </body>
-<script type="text/javascript">
-    var FB_PUBLIC_LOAD_DATA_ = [, ["為你溫暖傳遞❤", [
-                [1797887158, "開口說愛，讓愛遠傳", "(1) 點選 http://goo.gl/pbnEBd.\n(2) 找到對方\n(3) 將網址複製過來哦！  找不到嗎？ 看看教學http://goo.gl/2hSVcN", 6],
-                [1945311004, "填寫紙條", , 6],
-                [1958999976, "他的Facebook網址", "從這裡開始，點選 http://goo.gl/pbnEBd", 0, [
-                    [1951458406, , 1, , [
-                        [4, 299, ["https://(m|www).facebook.com/"], "請提供正確facebook連結喔❤"]
-                    ]]
-                ]],
-                [748532456, "想對他說的話", , 1, [
-                    [1826836959, , 1, , [
-                        [6, 203, [""]]
-                    ]]
-                ]],
-                [296324480, "為他點一首歌吧!", "目前只接受Youtube哦！到這裡尋找 http://goo.gl/7Z6XfY", 0, [
-                    [2017693091, , 1, , [
-                        [4, 299, ["https://(m.youtube.com|www.youtube.com|youtu.be)/"], "請提供正確的youtube連結哦❤"]
-                    ]]
-                ]]
-            ],
-            ["紙飛機收到訂單囉！\n稍後會將付款資訊傳遞給您。\n\n你的溫暖，我們幫你傳達。\n\n也想收到誰的溫暖情意嗎?\n快揪好友一起來玩！", 1, 0, 0, 0], , [, , , , , [, [
-                    ["1TNZaNfYIuN8bjFU3Rr1NsRriBvkByFE3RhrPO3eGc5vHag", 0, [1784, 449, 0]]
-                ],
-                [
-                    [86, 86, 86, , 2],
-                    [252, 252, 252, , 1],
-                    [252, 252, 252, , 1],
-                    [245, 245, 245, , 1],
-                    [86, 86, 86, , 2]
-                ]
-            ]],
-            [0, 0], , [1, ""], "紙飛機➣訂單", 20, [1, 0, 0], , , , , [2],
-            [
-                [1, 1, 1, 1, 1], 1
-            ]
-        ], "/forms", "訂單", "", ["12-74oHdL5onWJfjxDbAbvtqoVFruulGBA2LxNh-7Zcw", 3, ["1356442978"]],
-        [
-            [1, "https://docs.google.com/[domain]spreadsheet/ccc?key\u003d[key]\u0026usp\u003d[usp]#gid\u003dform"],
-            [2, "//www.google.com/fusiontables/data?docid\u003d[key]"],
-            [3, "https://docs.google.com/[domain]spreadsheets/d/[key]?usp\u003d[usp]#gid\u003d[grid]"]
-        ], "0", "", 0, 0, "", "", 0, "e/1FAIpQLSfKxCeeBHL-G9927uHdodJCW9L9om42eyPci2sMUoy1cV2byw"
-    ];
-</script>
 </html>
