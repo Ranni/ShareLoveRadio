@@ -102,6 +102,8 @@ function orderUrlGenerator(theOneFb, loveMsg, theSong){
 			'userName=' 	+ user_name 	+ '&' +		
 			'timestamp=' 	+ currentTimeFormat() + '&' +
 			
+			'userFbId=' 	+ user_id + '&' +
+			
 		    'theOneFb=' + theOneFb + '&' +
 		    'theWords=' + loveMsg + '&' +
 		    'theSong=' + theSong;
@@ -149,7 +151,7 @@ function googleFormSubmit(){
 	var theSong = $("#id_iframe_google_form").contents().find("#idTheSong").val();
 	
 	write_google_spreadsheet(SERVICE_MODE_ORDER, theOneFb, theWords, theSong);
-	ga('send', 'event', user_id, 'same-time-order='+(Math.floor(global_var_reload_cnt/2)+1), JSON.stringify(JSON.parse(user_data_json)), 10);
+	ga('send', 'event', user_fb_mail, 'same-time-order='+(Math.floor(global_var_reload_cnt/2)+1), JSON.stringify(JSON.parse(user_data_json)), 10);
 	
 }
 
