@@ -217,26 +217,29 @@
 		function copyShareLink(){
 			var copyTextarea = document.querySelector('.textarea_share_link');
 			
-			FB.ui({
-					method: 'feed',
-					name: '#紙飛機電台',
-					link: shareLink,
-					picture: 'http://1-dot-shareloveradio.appspot.com/img/theme_love.jpg',
-					caption: '傳遞心意，翻轉幸福',
-					description: '想說出心裡的話，但太害羞嗎? 快來玩 #紙飛機，輕鬆翻轉幸福。'
-				  },
-	  			function(response) {
-					if (response && response.post_id) {
-						showToast('已經分享於FB動態!');
-						showToast('快揪Line好友一起來!');
-						
-						if(deviceIphoneOrSafari) showToast('點選拷貝，去分享!');
-					  	else showToast('內容已複製，去分享!');
-					} else {
-					  showToast('別猶豫了! 分享5個好友，就可以獲得一張免費券!');
-					}
-			  	}
-			);
+			//window.setTimeout(function(){
+				FB.ui({
+						method: 'feed',
+						name: '#紙飛機電台',
+						link: shareLink,
+						picture: 'http://1-dot-shareloveradio.appspot.com/img/theme_love.jpg',
+						caption: '傳遞心意，翻轉幸福',
+						description: '想說出心裡的話，但太害羞嗎? 快來玩 #紙飛機，輕鬆翻轉幸福。'
+					  },
+		  			function(response) {
+						if (response && response.post_id) {
+							showToast('已經分享於FB動態!');
+							showToast('快揪Line好友一起來!');
+							
+							if(deviceIphoneOrSafari) showToast('點選拷貝，去分享!');
+						  	else showToast('內容已複製，去分享!');
+						} else {
+						  showToast('別猶豫了! 分享5個好友，就可以獲得一張免費券!');
+						}
+				  	}
+				);
+		    //}, 1200);
+			
   			
 			if(deviceIphoneOrSafari){
 				document.getElementById("id_share_link_text").focus();
