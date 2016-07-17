@@ -66,7 +66,6 @@
     		display: none;
     		background:#ccc;
     		height:auto;
-    		margin-top:30px;
     	}
     	
     	.dev_share_link{
@@ -74,7 +73,6 @@
     		/* border: 4px solid #4267B2; */
   			background: transparent;
   			height:auto;
-  			margin-top:30px;
     	}
     	.textarea_share_link{
     		min-height:220px; 
@@ -138,6 +136,8 @@
 		var SERVICE_MODE_SSO4COUPON	=	"fb-sso-4-coupon";
 		
 		var deviceIphoneOrSafari = false;
+		var introText="";
+		var shareLink="";
 		
 		function detectIphoneOrSafari(){
 			var uagent = navigator.userAgent.toLowerCase();
@@ -149,7 +149,7 @@
 	       	
 
 	        if(deviceIphoneOrSafari){
-	        	document.getElementById("copy_btn").text="分享內容全選";
+	        	//document.getElementById("copy_btn").text="分享內容全選";
 	        	document.getElementById("id_share_link_text").className="textarea_share_link_selectable";
 	        }else{
 				document.getElementById("copy_btn").className="btn btn-block btn-lg facebook_sso_btn ";
@@ -216,16 +216,37 @@
 		
 		function copyShareLink(){
 			var copyTextarea = document.querySelector('.textarea_share_link');
+			
+			FB.ui({
+					method: 'feed',
+					name: '#紙飛機電台',
+					link: shareLink,
+					picture: 'http://1-dot-shareloveradio.appspot.com/img/theme_love.jpg',
+					caption: '傳遞心意，翻轉幸福',
+					description: '想說出心裡的話，但太害羞嗎? 快來玩 #紙飛機，輕鬆翻轉幸福。'
+				  },
+	  			function(response) {
+					if (response && response.post_id) {
+						showToast('已經分享於FB動態!');
+						showToast('快揪Line好友一起來!');
+						
+						if(deviceIphoneOrSafari) showToast('點選拷貝，去分享!');
+					  	else showToast('內容已複製，去分享!');
+					} else {
+					  showToast('別猶豫了! 分享5個好友，就可以獲得一張免費券!');
+					}
+			  	}
+			);
   			
 			if(deviceIphoneOrSafari){
 				document.getElementById("id_share_link_text").focus();
     			document.getElementById("id_share_link_text").select();
     			document.getElementById("id_share_link_text").setSelectionRange(0, 9999);
     			
-    			showToast('請拷貝, 再分享');
+    			//showToast('請拷貝, 再分享');
 			}else{
 				copyTextarea.select();
-				showToast('已經複製了, 去分享');
+				//showToast('已經複製了, 去分享');
 			}
 			
 			
@@ -252,10 +273,10 @@
 		function hideShareLink(bIsHide){
 			if(bIsHide){
 				document.getElementById('id_dev_share_link').className="dev_share_link_hide";
-				document.getElementById('div_share_credit_number').style.display="none";
+				document.getElementById('div_share_credit_number').className="dev_share_link_hide";
 			}else{
 				document.getElementById('id_dev_share_link').className="dev_share_link";
-				document.getElementById('div_share_credit_number').style.display="block";
+				document.getElementById('div_share_credit_number').className="dev_share_link";
 			}
 		}
 		  
@@ -278,10 +299,10 @@
 			
 			access_token	= response.authResponse.accessToken;
 			user_id			= response.authResponse.userID;
-			var introText = "說不出口的話，心裡那份感動\n讓 #紙飛機電台 來幫你傳達！\n\n想說出心裡的話，但太害羞嗎?\n用 #紙飛機 也能　傳遞心意，翻轉幸福。\n\n";
+			introText = "說不出口的話，心裡那份感動；\r\n讓 #紙飛機電台 來幫你傳達！\r\n\r\n想說出心裡的話，但太害羞嗎?\r\n用 #紙飛機 也能　傳遞心意，翻轉幸福。\r\n\r\n";
 			var prefixShareLink = "http://1-dot-shareloveradio.appspot.com/module/fbpromote/fbshare.html?utm_source=FbShare&utm_campaign=20160801_init";
-			
-			document.getElementById('id_share_link_text').value = introText+prefixShareLink+"&utm_medium="+user_id;
+			shareLink = prefixShareLink+"&utm_medium="+user_id;
+			document.getElementById('id_share_link_text').value = introText+shareLink;
 			getCredit();
 			
 		    // Logged into your app and Facebook.
@@ -368,7 +389,7 @@
 
 
   
-  <body style="padding-bottom:10px">
+  <body style="padding-bottom:6px">
   	<!-- <iframe src="sharelove.html" width="100%" height="460px" frameborder="0" scrolling="no"></iframe> --> 
   	<div id="fb-root"></div>
 
@@ -404,23 +425,26 @@
 	
 	
   	
-  	<div id="div_share_credit_number" class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-center-block"
-  		 style="margin-bottom:8px;">
-  		<div style="font-size:1.6em; text-align:center; margin-bottom:20px;">
-  			已分享
-  			<span id="id_share_credit_number" style="color:red">0</span>
-  			位不重複好友
+  	<div  class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-center-block"
+  		 style="margin-bottom:42px;">
+  		<div id="div_share_credit_number" class="dev_share_link_hide" >
+  			<div style="font-size:1.6em; text-align:center; margin-bottom:20px;">
+	  			已分享
+	  			<span id="id_share_credit_number" style="color:red">0</span>
+	  			位不重複好友
+	  		</div>
+	  		<textarea id="id_share_credit_text" readonly 
+		  				class="textarea_share_credit"  style="font-size:1.4em;">
+			</textarea><br>
+		  				
+		  	<a class="btn btn-block btn-lg submit_btn_disabled " id="idSubmitBtn" 
+						style="font-size:24pt; font-weight:bold; text-align:center; height:65px;" 
+						onclick="submitBtnClicked();" 
+						onMouseOver="submitBtnHover();">
+						免費領取
+			</a>
   		</div>
-  		<textarea id="id_share_credit_text" readonly 
-	  				class="textarea_share_credit"  style="font-size:1.4em;">
-		</textarea><br>
-	  				
-	  	<a class="btn btn-block btn-lg submit_btn_disabled " id="idSubmitBtn" 
-					style="font-size:24pt; font-weight:bold; text-align:center; height:65px;" 
-					onclick="submitBtnClicked();" 
-					onMouseOver="submitBtnHover();">
-					免費領取
-		</a>
+  		
   	</div>
   	
   	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-center-block" style="padding-top:2px;">
@@ -430,7 +454,7 @@
 	  			<a class="btn btn-block btn-lg facebook_sso_btn " id="copy_btn"
 					style="font-size:24pt; font-weight:bold; text-align:center; height:65px;" 
 					onclick="copyShareLink();">
-					點我複製，去分享!
+					我要免費券!
 				</a>
 		</div>
 	</div>
