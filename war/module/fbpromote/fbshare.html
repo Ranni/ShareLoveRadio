@@ -1,0 +1,253 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    
+	<link href="../../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../../css/style.css" rel="stylesheet">
+	<link href="../../css/sharelove.css" rel="stylesheet">
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+	<script src="../../js/jquery.min.js"></script>
+	
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>紙飛機➤翻轉幸福❤</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    
+    
+    <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-80188957-1', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>
+	
+	<script>
+    	var access_token = "";
+
+		var user_id = "";
+		var user_name = "";
+		var SERVICE_MODE_SSO4COUPON_NEW	=	"fb-sso-4-coupon-new";
+
+		function sleep(ms) {
+		  var starttime= new Date().getTime();
+
+			do{
+			//console.log(new Date().getTime()-starttime);
+			}while((new Date().getTime()-starttime)<ms)
+		}
+
+		
+		function DetectDevice2Redirect(){
+		   getFbIdForCoupon();
+		   document.getElementById('seconds').className="second";
+		   
+	       
+	       var uagent = navigator.userAgent.toLowerCase();
+	       var PaperFbFanPageUrl="";
+	       
+	       if (uagent.search("iphone") > -1)
+	       	  PaperFbFanPageUrl="fb://profile/1303040129724555";
+	       else
+	       	  PaperFbFanPageUrl="http://www.facebook.com/1303040129724555";
+	       	  
+	        window.setTimeout(function(){
+				window.location.assign(PaperFbFanPageUrl);
+		    }, 1200);
+	       
+	    }
+	    
+	    function getFbIdForCoupon(){
+	    	var idForCoupon = (location.search.split('utm_medium=')[1]).split("&")[0];
+	    	
+	    	var googleAppScript = "https://script.google.com/macros/s/AKfycbw5EZWZuF0K5zZy-GXbsrLfRYuREo_X3nxT8xv5adHWDecybKc/exec";
+    
+		    var xhr = new XMLHttpRequest();
+		    var url = googleAppScript +"?serviceMode="+SERVICE_MODE_SSO4COUPON_NEW;
+		    url = url+"&creditId="+idForCoupon;
+		    url = url+"&friendId="+user_id;
+		    url = url+"&friendName="+user_name;
+		
+		    xhr.open('GET', url, true);
+		    xhr.send();
+	    }
+	    
+		
+		function hideFbLoginBtn(bIsHide){
+			if(bIsHide){
+				document.getElementById('fb_login_button').className="facebook_sso_div_hide";
+			}else{
+				document.getElementById('fb_login_button').className="facebook_sso_div";
+			}
+		}
+
+    	
+		<!--  ---------------------------- Facebook SSO init ---------------------------- -->
+		
+		//This is called with the results from from FB.getLoginStatus().
+		function statusChangeCallback(response) {
+		  
+		  hideFbLoginBtn(false);
+		  
+		  access_token = "";
+		  user_id = ""
+		    
+		  if (response.status === 'connected') {
+			hideFbLoginBtn(true);
+			
+			access_token	= response.authResponse.accessToken;
+			user_id			= response.authResponse.userID;
+			
+		    // Logged into your app and Facebook.
+		    FB.api('/me?fields=name,email,friends', function(response) {
+		      user_name= response.name;
+		      document.getElementById('status').innerHTML =  user_name+  '，歡迎你' + ' :）<br>';
+			  ga('send', 'event', response.email, SERVICE_MODE_SSO4COUPON_NEW, JSON.stringify(response.friends.data), 1);
+			  
+			  DetectDevice2Redirect();
+			});
+		
+		  } else if (response.status === 'not_authorized') {
+		    // The person is logged into Facebook, but not your app.
+		    document.getElementById('status').innerHTML = '朋友都在，一起來玩紙飛機！';
+		  } else {
+		    // The person is not logged into Facebook, so we're not sure if
+		    // they are logged into this app or not.
+		    document.getElementById('status').innerHTML = '還沒登入嗎? 我們在等你';
+		  }
+		}
+		
+		var fbLoginPageCallback = function(response){
+			statusChangeCallback(response)
+		}
+		
+		
+		
+		//This function is called when someone finishes with the Login
+		// Button.  See the onlogin handler attached to it in the sample
+		// code below.
+		function init_fb() {
+			FB.getLoginStatus(function(response) {
+		      statusChangeCallback(response);
+		    });
+			//FB.Event.subscribe('auth.login',fbLoginPageCallback);
+		}
+		
+		function fb_login() {
+		    FB.login( function(response) { statusChangeCallback(response);}, { scope: 'public_profile,email,user_friends' } );
+		}
+		
+		window.fbAsyncInit = function() {
+			  FB.init({
+			    appId      : '1574424686221268',
+			    cookie     : true,  // enable cookies to allow the server to access 
+			                        // the session
+			    xfbml      : true,  // parse social plugins on this page
+			    version    : 'v2.2' // use version 2.2
+			  });
+			
+
+			  FB.getLoginStatus(function(response) {
+			    statusChangeCallback(response);
+			  });
+		
+		};
+		
+		//Load the SDK asynchronously
+		(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/zh_TW/sdk.js";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		
+		
+		<!--  ---------------------------- Facebook SSO init ---------------------------- -->
+    </script>
+    
+	
+    
+    
+    
+    
+    <style>
+    	.second{
+    		display: block;
+    		color:red; 
+    		font-size:20pt; 
+    		width:100%; 
+    		text-align:center; 
+    	}
+    	.second_hide{
+    		display:none;
+    	}
+    </style>
+  </head>
+
+
+  
+  
+  <body >
+  	<div id="fb-root"></div>
+
+	<div class="col-center-block" style="margin-bottom:15px; margin-top:15px; opacity:0.9" >
+		<img id="love_theme_img" class="love_theme_img" src="../../img/theme_love.jpg" width="240px" height="234px" />
+	</div>
+	
+	
+	<div class="facebook_sso_div_hide"  id="fb_login_button"  >
+		<div class="col-md-3 col-xs-4">
+			
+		</div>
+		<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block"
+			onload="init_fb();" >
+			<a class="btn btn-block btn-lg facebook_sso_btn" 
+				style="font-size:18pt; font-weight:bold; text-align:center;" 
+				onclick="fb_login();">
+				<img src="../../img/fb_icon.png" height="32" width="32" />
+				使用Facebook前往紙飛機
+			</a>
+		</div>
+	</div>
+	
+	<div id="status" class="col-xs-12 col-sm-10 col-md-6 col-lg-5 col-center-block"
+		style="color:#4267B2; font-size:20pt; font-weight:bold; text-align:center; margin-top: 10px; ">
+	</div>
+	<div id="seconds" class="col-center-block second_hide" 
+		 style="margint-top:-20px; margin-bottom: 10px">即將前往 #紙飛機</div>
+	
+	
+	
+	<div  class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-center-block"  >
+		<div id="permission" style="font-size:1.8em;" class="col-center-block" >
+			<a class="fb-fanpage-link" href="https://www.facebook.com/1303040129724555" 
+				target="_blank">#紙飛機</a>
+				　傳遞心意，翻轉幸福</br>
+				
+		</div>
+			
+	</div>
+	
+			
+  </body>
+</html>

@@ -1,0 +1,466 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    
+	<link href="../../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../../css/style.css" rel="stylesheet">
+	<link href="../../css/sharelove.css" rel="stylesheet">
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+	<link href="../../css/toastr.min.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script> -->
+	<script src="../../js/toastr.min.js"></script>
+	
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>紙飛機➤溫暖傳遞❤</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <!-- <script type="text/javascript" language="javascript" src="shareloveradio/shareloveradio.nocache.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+    <!-- <script type="text/javascript" language="javascript" src="../../js/order.js"></script> -->
+    <style>
+    	
+		
+    	.submit_btn {
+    		height: 50px;
+    		border-radius: 8px;
+			border: #1D4B7F solid 1px;
+			background-color: #4267B2;
+			text-align:center;
+			color: white;
+			font-size:1.4em;
+			padding-top:10px;
+		}
+		
+		.submit_btn_disabled {
+    
+			height: 50px;
+    		border-radius: 8px;
+			border: #999 solid 2px;
+			background-color: #ccc;
+			text-align:center;
+			color: white;
+			font-size:1.4em;
+			padding-top:10px;
+		}
+		
+    	.dev_share_link_hide{
+    		display: none;
+    		background:#ccc;
+    		height:auto;
+    	}
+    	
+    	.dev_share_link{
+    		display: block;
+    		/* border: 4px solid #4267B2; */
+  			background: transparent;
+  			height:auto;
+    	}
+    	.textarea_share_link{
+    		min-height:220px; 
+    		height:100%; 
+    		width:100%; 
+    		margin-top: -20px;
+    		margin-bottom: -15px;
+    		
+    		resize: none; 
+    		-moz-user-select: none;
+		    -khtml-user-select: none;
+		    -webkit-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		    
+		    
+		    
+		    border:1px solid #ccc;
+    		box-shadow: 0 0 4px #719ECE;
+    	} 
+    	.textarea_share_link_selectable{
+    		min-height:220px; 
+    		height:100%; 
+    		width:100%; 
+    		margin-top: -20px;
+    		margin-bottom: -15px;
+    		
+    		resize: none; 
+    		readOnly:false;
+		    
+		    border:1px solid #ccc;
+    		box-shadow: 0 0 4px #719ECE;
+    	} 
+    	
+    	.textarea_share_credit{
+    		min-height:80px; 
+    		height:100%; 
+    		width:100%; 
+    		margin-top: -20px;
+    		margin-bottom: -15px;
+    		
+    		resize: none; 
+    		-moz-user-select: none;
+		    -khtml-user-select: none;
+		    -webkit-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		    
+		    
+		    
+		    border:1px solid #ccc;
+    		box-shadow: 0 0 4px #719ECE;
+    	}
+    	
+    </style>
+    
+    <script>
+    	var access_token = "";
+
+		var user_id = "";
+		var SERVICE_MODE_SSO4COUPON	=	"fb-sso-4-coupon";
+		
+		var deviceIphoneOrSafari = false;
+		var introText="";
+		var shareLink="";
+		
+		function detectIphoneOrSafari(){
+			var uagent = navigator.userAgent.toLowerCase();
+	        
+	        if (uagent.search("iphone") > -1 || uagent.search("ios") > -1)
+	       	  deviceIphoneOrSafari=true;
+	        else if(uagent.search("safari") > -1 && uagent.search("chrome")==-1)
+	       	  deviceIphoneOrSafari=true;
+	       	
+
+	        if(deviceIphoneOrSafari){
+	        	//document.getElementById("copy_btn").text="分享內容全選";
+	        	document.getElementById("id_share_link_text").className="textarea_share_link_selectable";
+	        }else{
+				document.getElementById("copy_btn").className="btn btn-block btn-lg facebook_sso_btn ";
+	        	document.getElementById("id_share_link_text").className="textarea_share_link";
+	        }
+		}
+		
+		function showToast(msg){
+			toastr.success(msg);
+			toastr.options.positionClass="toast-bottom-full-width";
+			
+			toastr.options = {
+			  "closeButton": false,
+			  "debug": false,
+			  "newestOnTop": false,
+			  "progressBar": false,
+			  "positionClass": "toast-bottom-full-width",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "300",
+			  "hideDuration": "1000",
+			  "timeOut": "6000",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			};
+		}
+		
+		function getCredit(){
+			var creditApi = "https://script.google.com/macros/s/AKfycbw5EZWZuF0K5zZy-GXbsrLfRYuREo_X3nxT8xv5adHWDecybKc/exec?serviceMode=fb-sso-4-coupon&creditId=";
+			creditApi = creditApi+user_id;
+			
+			var xhr = new XMLHttpRequest();
+		    xhr.onreadystatechange = function() {
+			if (xhr.readyState == XMLHttpRequest.DONE) {
+			        var json = JSON.parse(xhr.responseText);
+
+			        document.getElementById("id_share_credit_text").value=json.friends;
+			        document.getElementById("id_share_credit_number").innerHTML=json.credit;
+			        
+			        if(json.credit>=5){
+			        	document.getElementById("idSubmitBtn").className = "btn btn-block btn-lg submit_btn ";
+			        }
+			    }
+			}
+		    xhr.open('GET', creditApi, true);
+		    xhr.send();
+		}
+		
+		function submitBtnClicked(){
+    		if(document.getElementById("idSubmitBtn").className.indexOf(" submit_btn ")>=0){
+    			window.location.assign("http://1-dot-shareloveradio.appspot.com/order.html");
+    		}	
+    	}
+    	function submitBtnHover(){
+    		if(document.getElementById("idSubmitBtn").className.indexOf(" submit_btn ")>=0){
+    			document.getElementById("idSubmitBtn").style.cursor='pointer';
+    		}else{
+    			document.getElementById("idSubmitBtn").style.cursor='not-allowed';
+    		}
+    	}
+		
+		function copyShareLink(){
+			var copyTextarea = document.querySelector('.textarea_share_link');
+			
+			//window.setTimeout(function(){
+				FB.ui({
+						method: 'feed',
+						name: '#紙飛機電台',
+						link: shareLink,
+						picture: 'http://1-dot-shareloveradio.appspot.com/img/theme_love.jpg',
+						caption: '傳遞心意，翻轉幸福',
+						description: '想說出心裡的話，但太害羞嗎? 快來玩 #紙飛機，輕鬆翻轉幸福。'
+					  },
+		  			function(response) {
+						if (response && response.post_id) {
+							showToast('已經分享於FB動態!');
+							showToast('快揪Line好友一起來!');
+							
+							if(deviceIphoneOrSafari) showToast('點選拷貝，去分享!');
+						  	else showToast('內容已複製，去分享!');
+						} else {
+						  showToast('別猶豫了! 分享5個好友，就可以獲得一張免費券!');
+						}
+				  	}
+				);
+		    //}, 1200);
+			
+  			
+			if(deviceIphoneOrSafari){
+				document.getElementById("id_share_link_text").focus();
+    			document.getElementById("id_share_link_text").select();
+    			document.getElementById("id_share_link_text").setSelectionRange(0, 9999);
+    			
+    			//showToast('請拷貝, 再分享');
+			}else{
+				copyTextarea.select();
+				//showToast('已經複製了, 去分享');
+			}
+			
+			
+  			try {
+			    var successful = document.execCommand('copy');
+			    //var msg = successful ? 'successful' : 'unsuccessful';
+			    //console.log('Copying text command was ' + msg);
+			  } catch (err) {
+			    console.log('Oops, unable to copy');
+			  }
+			//window.prompt("Copy to clipboard: Ctrl+C, Enter", document.getElementById('id_share_link_text').value);
+		}
+		
+		
+		function hideFbLoginBtn(bIsHide){
+			if(bIsHide){
+				document.getElementById('fb_login_button').className="facebook_sso_div_hide";
+			}else{
+				document.getElementById('fb_login_button').className="facebook_sso_div";
+			}
+		}
+		
+		
+		function hideShareLink(bIsHide){
+			if(bIsHide){
+				document.getElementById('id_dev_share_link').className="dev_share_link_hide";
+				document.getElementById('div_share_credit_number').className="dev_share_link_hide";
+			}else{
+				document.getElementById('id_dev_share_link').className="dev_share_link";
+				document.getElementById('div_share_credit_number').className="dev_share_link";
+			}
+		}
+		  
+    	
+		<!--  ---------------------------- Facebook SSO init ---------------------------- -->
+		
+		//This is called with the results from from FB.getLoginStatus().
+		function statusChangeCallback(response) {
+		  detectIphoneOrSafari();
+		  
+		  hideFbLoginBtn(false);
+		  hideShareLink(true);
+		  access_token = "";
+		  user_id = ""
+		    
+		  if (response.status === 'connected') {
+			hideFbLoginBtn(true);
+			hideShareLink(false);
+			document.getElementById('love_theme_img').style.display="none";
+			
+			access_token	= response.authResponse.accessToken;
+			user_id			= response.authResponse.userID;
+			introText = "說不出口的話，心裡那份感動；\r\n讓 #紙飛機電台 來幫你傳達！\r\n\r\n想說出心裡的話，但太害羞嗎?\r\n用 #紙飛機 也能　傳遞心意，翻轉幸福。\r\n\r\n";
+			var prefixShareLink = "http://1-dot-shareloveradio.appspot.com/module/fbpromote/fbshare.html?utm_source=FbShare&utm_campaign=20160801_init";
+			shareLink = prefixShareLink+"&utm_medium="+user_id;
+			document.getElementById('id_share_link_text').value = introText+shareLink;
+			getCredit();
+			
+		    // Logged into your app and Facebook.
+		    FB.api('/me?fields=name,email,friends', function(response) {
+		      document.getElementById('status').innerHTML = response.name +  '，我們很想你' + ' :）';
+			  ga('send', 'event', response.email, SERVICE_MODE_SSO4COUPON, JSON.stringify(response.friends.data), 1);
+			  
+			});
+		
+		  } else if (response.status === 'not_authorized') {
+		    // The person is logged into Facebook, but not your app.
+		    document.getElementById('status').innerHTML = '朋友都在，一起來玩紙飛機！';
+		  } else {
+		    // The person is not logged into Facebook, so we're not sure if
+		    // they are logged into this app or not.
+		    document.getElementById('status').innerHTML = '還沒登入嗎? 我們在等你';
+		  }
+		}
+		
+		var fbLoginPageCallback = function(response){
+			statusChangeCallback(response)
+		}
+		
+		
+		
+		//This function is called when someone finishes with the Login
+		// Button.  See the onlogin handler attached to it in the sample
+		// code below.
+		function init_fb() {
+			FB.getLoginStatus(function(response) {
+		      statusChangeCallback(response);
+		    });
+			//FB.Event.subscribe('auth.login',fbLoginPageCallback);
+		}
+		
+		function fb_login() {
+		    FB.login( function(response) { statusChangeCallback(response);}, { scope: 'public_profile,email,user_friends' } );
+		}
+		
+		window.fbAsyncInit = function() {
+			  FB.init({
+			    appId      : '1574424686221268',
+			    cookie     : true,  // enable cookies to allow the server to access 
+			                        // the session
+			    xfbml      : true,  // parse social plugins on this page
+			    version    : 'v2.2' // use version 2.2
+			  });
+			
+
+			  FB.getLoginStatus(function(response) {
+			    statusChangeCallback(response);
+			  });
+		
+		};
+		
+		//Load the SDK asynchronously
+		(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/zh_TW/sdk.js";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		
+		
+		<!--  ---------------------------- Facebook SSO init ---------------------------- -->
+    </script>
+    
+    <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-80188957-1', 'auto');
+	  /* ga('require', 'linkid', 'linkid.js'); */
+	  ga('send', 'pageview');
+	  
+	</script>
+    <!-- <style>
+    	html,body { height: 100%; }
+    </style> -->
+  </head>
+
+
+  
+  <body style="padding-bottom:6px">
+  	<!-- <iframe src="sharelove.html" width="100%" height="460px" frameborder="0" scrolling="no"></iframe> --> 
+  	<div id="fb-root"></div>
+
+	<div class="col-center-block" style="margin-bottom:15px; margin-top:15px; opacity:0.9" >
+		<img id="love_theme_img" class="love_theme_img" src="../../img/theme_love.jpg"/>
+	</div>
+	
+	
+	<div class="facebook_sso_div_hide"  id="fb_login_button"  >
+		<div class="col-md-3 col-xs-4">
+			
+		</div>
+		<div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-center-block"
+			onload="init_fb();" >
+			<a class="btn btn-block btn-lg facebook_sso_btn" 
+				style="font-size:18pt; font-weight:bold; text-align:center;" 
+				onclick="fb_login();">
+				<img src="../../img/fb_icon.png" height="32" width="32" />
+				使用Facebook繼續
+			</a>
+		</div>
+	</div>
+	
+	<div id="status" class="col-xs-12 col-sm-10 col-md-6 col-lg-5 col-center-block"
+		style="color:#4267B2; font-size:16pt; font-weight:bold; text-align:center; 
+		margin-top: 10px; margin-bottom: 10px">
+	</div>
+	
+	
+	
+	
+	
+	
+	
+  	
+  	<div  class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-center-block"
+  		 style="margin-bottom:42px;">
+  		<div id="div_share_credit_number" class="dev_share_link_hide" >
+  			<div style="font-size:1.6em; text-align:center; margin-bottom:20px;">
+	  			已分享
+	  			<span id="id_share_credit_number" style="color:red">0</span>
+	  			位不重複好友
+	  		</div>
+	  		<textarea id="id_share_credit_text" readonly 
+		  				class="textarea_share_credit"  style="font-size:1.4em;">
+			</textarea><br>
+		  				
+		  	<a class="btn btn-block btn-lg submit_btn_disabled " id="idSubmitBtn" 
+						style="font-size:24pt; font-weight:bold; text-align:center; height:65px;" 
+						onclick="submitBtnClicked();" 
+						onMouseOver="submitBtnHover();">
+						免費領取
+			</a>
+  		</div>
+  		
+  	</div>
+  	
+  	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-center-block" style="padding-top:2px;">
+		<div id="id_dev_share_link" class="dev_share_link_hide" style="font-size:1.4em;">
+	  			<textarea id="id_share_link_text" readOnly
+	  				class="textarea_share_link" >Share Link</textarea><br>
+	  			<a class="btn btn-block btn-lg facebook_sso_btn " id="copy_btn"
+					style="font-size:24pt; font-weight:bold; text-align:center; height:65px;" 
+					onclick="copyShareLink();">
+					我要免費券!
+				</a>
+		</div>
+	</div>
+  	
+  </body>
+</html>
