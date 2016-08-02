@@ -95,6 +95,8 @@ function fbSsoUrlGenerator(){
 }
 
 function orderUrlGenerator(theOneFb, loveMsg, theSong){
+	console.log(encodeURIComponent(loveMsg));
+	
 	var urlPostfix = "?" + 
 			'serviceMode=' 	+ SERVICE_MODE_ORDER+ '&' +	
 			
@@ -105,7 +107,7 @@ function orderUrlGenerator(theOneFb, loveMsg, theSong){
 			'userFbId=' 	+ user_id + '&' +
 			
 		    'theOneFb=' + theOneFb + '&' +
-		    'theWords=' + loveMsg + '&' +
+		    'theWords=' + encodeURIComponent(loveMsg) + '&' +
 		    'theSong=' + theSong;
 	return urlPostfix;
 }
@@ -212,9 +214,15 @@ function fbLoginSuccess() {
       user_fb_mail	= response.email;
       user_age_range= JSON.stringify(response.age_range);
       user_gender	= response.gender;
-      user_device	= (response.devices)[0].hardware;
-      if(user_device==null) user_device="";
-      user_device_os= (response.devices)[0].os;
+      try{
+    	  user_device	= (response.devices)[0].hardware;
+    	  user_device_os= (response.devices)[0].os;
+      }catch(e){
+    	  user_device	= "";
+    	  user_device_os= "";
+      }
+      
+      
       user_pic_url		= response.picture.data.url;
       
       profileImgFaceDetect(user_pic_url);
